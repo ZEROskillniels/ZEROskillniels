@@ -27,7 +27,7 @@ CONFIG = {
     ],
     
     # ASCII Art settings
-    "ascii_width": 130,  # Characters wide
+    "ascii_width": 160,  # Characters wide
 }
 
 ASCII_CHARS = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."]
@@ -81,9 +81,12 @@ def get_placeholder_ascii(width):
     return face.strip() + "\n"
 
 def generate_svg(ascii_art):
-    svg_width = 1200
-    svg_height = 650
-    text_x = 650
+    ascii_lines = [line for line in ascii_art.split('\n') if line]
+    num_ascii_lines = len(ascii_lines)
+    
+    svg_width = 900
+    svg_height = 100 + (num_ascii_lines * 9) + 60 + len(CONFIG["details"]) * 22 + 40
+    text_x = 40
     
     # Escape special characters in text
     def escape_xml(s):
@@ -94,15 +97,15 @@ def generate_svg(ascii_art):
     <style>
         .terminal-bg {{ fill: {CONFIG['bg_color']}; stroke: {CONFIG['border_color']}; stroke-width: 1; rx: 10; }}
         .header-bar {{ fill: #161b22; rx: 10; }}
-        .ascii-text {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 10px; font-weight: bold; fill: {CONFIG['theme_color']}; }}
+        .ascii-text {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 8px; font-weight: bold; fill: {CONFIG['theme_color']}; }}
         .cmd-text {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 16px; fill: {CONFIG['text_color']}; font-weight: bold; }}
         .key-text {{ fill: {CONFIG['theme_color']}; font-weight: bold; }}
         .val-text {{ fill: {CONFIG['text_color']}; }}
         .cursor {{ fill: {CONFIG['theme_color']}; animation: blink 1s step-end infinite; }}
         
-        @keyframes fadein {{
-            0% {{ opacity: 0; }}
-            100% {{ opacity: 1; }}
+        @keyframes scan {{
+            0%, 5% {{ opacity: 1; text-shadow: 0 0 5px {CONFIG['theme_color']}; }}
+            15%, 100% {{ opacity: 0.3; text-shadow: none; }}
         }}
         @keyframes blink {{
             0%, 100% {{ opacity: 1; }}
@@ -129,13 +132,13 @@ def generate_svg(ascii_art):
     # Generate clip paths for each line
     start_delay = 0.5
     line_dur = 0.15
-    y_offset = 80
+    y_offset = 60 + (num_ascii_lines * 9) + 40
     
     # Prompt line
     svg += f"""
         <clipPath id="clip-prompt">
             <rect x="{text_x}" y="{y_offset-15}" width="0" height="25">
-                <animate attributeName="width" from="0" to="500" begin="{start_delay}s" dur="{line_dur*2}s" fill="freeze" />
+                <animate attributeName="width" from="0" to="800" begin="{start_delay}s" dur="{line_dur*2}s" fill="freeze" />
             </rect>
         </clipPath>
 """
@@ -147,7 +150,7 @@ def generate_svg(ascii_art):
             svg += f"""
         <clipPath id="clip-line-{i}">
             <rect x="{text_x}" y="{y_offset + 35 + i*22 - 18}" width="0" height="25">
-                <animate attributeName="width" from="0" to="400" begin="{start_delay}s" dur="{line_dur}s" fill="freeze" />
+                <animate attributeName="width" from="0" to="800" begin="{start_delay}s" dur="{line_dur}s" fill="freeze" />
             </rect>
         </clipPath>
 """
@@ -156,18 +159,19 @@ def generate_svg(ascii_art):
     svg += """
     </defs>
     
-    <!-- ASCII Art (Left Side) -->
+    <!-- ASCII Art (Top Side) -->
     <g transform="translate(20, 50)">
         <text xml:space="preserve" class="ascii-text">"""
-    for i, line in enumerate(ascii_art.split('\n')):
-        if line:
-            delay = i * 0.04
-            svg += f'<tspan x="0" dy="{11 if i>0 else 0}" style="opacity: 0; animation: fadein 0.5s {delay}s forwards">{escape_xml(line)}</tspan>'
+    
+    scan_duration = 4.0
+    for i, line in enumerate(ascii_lines):
+        delay = (i / num_ascii_lines) * scan_duration
+        svg += f'<tspan x="0" dy="{9 if i>0 else 0}" style="opacity: 0.3; animation: scan {scan_duration}s {delay}s infinite linear">{escape_xml(line)}</tspan>'
     
     svg += """</text>
     </g>
     
-    <!-- Text Content (Right Side) -->
+    <!-- Text Content (Bottom Side) -->
 """
     
     # Prompt
