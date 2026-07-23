@@ -1,0 +1,158 @@
+<svg width="1200" height="650" viewBox="0 0 1200 650" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <style>
+        .terminal-bg { fill: #0d1117; stroke: #23d18b; stroke-width: 1; rx: 10; }
+        .header-bar { fill: #161b22; rx: 10; }
+        .ascii-text { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 10px; font-weight: bold; fill: #23d18b; opacity: 0; animation: fadein 2s forwards; }
+        .cmd-text { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 16px; fill: #c9d1d9; font-weight: bold; }
+        .key-text { fill: #23d18b; font-weight: bold; }
+        .val-text { fill: #c9d1d9; }
+        .cursor { fill: #23d18b; animation: blink 1s step-end infinite; }
+        
+        @keyframes fadein {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+    
+    <!-- Background -->
+    <rect x="1" y="1" width="1198" height="648" class="terminal-bg" />
+    <path d="M1 11 Q1 1 11 1 L1189 1 Q1199 1 1199 11 L1199 30 L1 30 Z" fill="#161b22" stroke="#23d18b" stroke-width="1"/>
+    
+    <!-- Window controls -->
+    <circle cx="20" cy="15" r="6" fill="#ff5f56" />
+    <circle cx="40" cy="15" r="6" fill="#ffbd2e" />
+    <circle cx="60" cy="15" r="6" fill="#27c93f" />
+    
+    <!-- Title -->
+    <text x="600.0" y="20" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace" font-size="14" fill="#8b949e" text-anchor="middle">~/profile.sh</text>
+
+    <!-- Clip Paths for Typing Animation -->
+    <defs>
+
+        <clipPath id="clip-prompt">
+            <rect x="650" y="65" width="0" height="25">
+                <animate attributeName="width" from="0" to="500" begin="0.5s" dur="0.3s" fill="freeze" />
+            </rect>
+        </clipPath>
+
+        <clipPath id="clip-line-0">
+            <rect x="650" y="97" width="0" height="25">
+                <animate attributeName="width" from="0" to="400" begin="1.0s" dur="0.15s" fill="freeze" />
+            </rect>
+        </clipPath>
+
+        <clipPath id="clip-line-1">
+            <rect x="650" y="119" width="0" height="25">
+                <animate attributeName="width" from="0" to="400" begin="1.15s" dur="0.15s" fill="freeze" />
+            </rect>
+        </clipPath>
+
+        <clipPath id="clip-line-2">
+            <rect x="650" y="141" width="0" height="25">
+                <animate attributeName="width" from="0" to="400" begin="1.2999999999999998s" dur="0.15s" fill="freeze" />
+            </rect>
+        </clipPath>
+
+        <clipPath id="clip-line-3">
+            <rect x="650" y="163" width="0" height="25">
+                <animate attributeName="width" from="0" to="400" begin="1.4499999999999997s" dur="0.15s" fill="freeze" />
+            </rect>
+        </clipPath>
+
+        <clipPath id="clip-line-4">
+            <rect x="650" y="185" width="0" height="25">
+                <animate attributeName="width" from="0" to="400" begin="1.5999999999999996s" dur="0.15s" fill="freeze" />
+            </rect>
+        </clipPath>
+
+        <clipPath id="clip-line-6">
+            <rect x="650" y="229" width="0" height="25">
+                <animate attributeName="width" from="0" to="400" begin="1.7499999999999996s" dur="0.15s" fill="freeze" />
+            </rect>
+        </clipPath>
+
+        <clipPath id="clip-line-7">
+            <rect x="650" y="251" width="0" height="25">
+                <animate attributeName="width" from="0" to="400" begin="1.8999999999999995s" dur="0.15s" fill="freeze" />
+            </rect>
+        </clipPath>
+
+        <clipPath id="clip-line-8">
+            <rect x="650" y="273" width="0" height="25">
+                <animate attributeName="width" from="0" to="400" begin="2.0499999999999994s" dur="0.15s" fill="freeze" />
+            </rect>
+        </clipPath>
+
+        <clipPath id="clip-line-9">
+            <rect x="650" y="295" width="0" height="25">
+                <animate attributeName="width" from="0" to="400" begin="2.1999999999999993s" dur="0.15s" fill="freeze" />
+            </rect>
+        </clipPath>
+
+    </defs>
+    
+    <!-- ASCII Art (Left Side) -->
+    <g transform="translate(20, 50)">
+        <text xml:space="preserve" class="ascii-text"><tspan x="0" dy="0">@################################@@@@#@##@@#@@#@@#@#@@@#@@@@@####@@@@@#@@@@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@##S#S###########SS####S######S######S#######@#@####@@###@@@@S#@##@@@@#@@@@@#@#@@@#@##@@#@@@@@@@@@@@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@SSSSS###SSSSS###S####S%##S##SSSSS###S###S#S#@#####S@@@S#####S#@S#@@#@###S###@###@S@##@#S@#@@@#@@@@@@@@#@@@@@@@@@@@#@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@SSSS%SSSSSSSSSSSS##SSSSSSS#S##SSS###SS#SS#SS####S#########S#S##SS@@S#%###@#S@@#@#S#@@@@#@#@@@#@@@@##@@#@@@@@@@@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@SSSSSSSSSSSS%SSSSSSSS#SSSS##SSSS####SS#S##S#####%##SS#SS##S#S#SSS@@S#S##@@#S@###@S#@@@@#@@@@##@@@@##@@#@@@@@@@@@@##@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@SSSS%SSSSSSS%SSS%SSS#SSSSS#S#SSS#SS#%S##S#SS####S#S###%###@@S##SS###@#SS#@#S#S#@@S#@@@@S##@@#S@@@@##@@##@@@@#@@#@##@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@%%SSSSSSSSSS%SS%%SSSSS%#S%#S##%S#SS#S###S#S%S#SS##S###S####@SSSS###@@S##S##S@##@@S#@@##S##S@#S@#@@##@@##@####@#@@@#@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#S%SS%%S%SSSSSSS%SSSSSS%SS%SSSSSSS###S%#S##SS#S##S#S###%##SSS%SSSSSSS#####@#S@@#@#%#@@##S##S@##@@@@@@@@##@@#@#@#@@@#@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#S%%S%%SSSS%SSSS%%SSSSS%S%%SSSSSSSSSS%%SSSS%S#SSSS#SSSS?%?*?SSS##SS%%%%S#@@#S#@##########@@@@S##@##@#@@##@@@@###@@@#@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#%%%SS%%%SS%SS%%%%%%SSS%%%SS#SSSS###S%%S%S#SS#SSSS#SS?*++?S######SSSS%?*?%##S@########S#@@##@##@###@#@#S@@#@@#@@@@@#@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#S%%%%%%%SS%S%SS%%SSS%S%S%?%SSSSSSSSS%%SSS#SS#SS#S%*;;+*?%########SSSS%***???#@###S@@@###@##@##@S#@@#@#S#@@#@@@@@@@@@#@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#%%S%%SS%SS%%%SS%%%%%%SS%%%SSSS%%%%%#SSSS##%%SSSS*;;;+*??%#####S###SSS%?*?%%??%#@@#@@@S##@@@@#S@#@@S#@@#@@##@#@@#@@#@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#%%%%%%%%SSSSS%%%%SS%%S%SS%SSSS%%SSSSSSS%%SSSSS?;+*+;+*?%S#########SSSSS?*?SS%??%#S#@@#@#@@@@SS@S@@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#%%%S%%SSSSSSS%SS%SS%%S%SS%S%SSSS%SS??S#S%SS%%++%#?+;+?S###########SSSSSS%?%SSS%??S@#####@@@#S@@@@@###@##@@@@@@#@@@#@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#%%SS%SSSSSS%%SS%%SSSSSS%%SS%SSSS%SS%%S%%%S%?+?#@%++*%#@@@@@@##########SSSS%%S#SS%?S##@#S#@@@S#@#####S@##@##@#@@@@@#@@@@#@@@@@@@@@</tspan><tspan x="0" dy="11">#SSSS%SSS%%%SSSSS%%%%SS%%S%S%%%%SSSSSSSS%SS*+%@@?;+?S#@#@@@@@@##@#######SSSS%%%#SSS%?S@@#@@##S#@@@@###@##@@@@@@@@@@##@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#SSSS%%SSSS%S%%%SSS%%S%%SSSS%%%%%S%%S%%SS%++S@#*;+?S######@@@@##@#####SSSSSSSS%%SSSS%%%######S#@@@@##@##S@@@@@@@@@@@@@@@#@@@@@@@@@</tspan><tspan x="0" dy="11">#%%%S%SS%SS%%%SSS%%SS%S%S%%SSSS%SSSS%%SS?;+S@S+;*%#@###@@@@@@###@####SSSSSSSSSS%%%SSSS%?%@@#@#S#@@@@@@###@@@@#@@@@##@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#%%%S%%S%SS%%%SS%%S%%SS%%S%SSS%%%SSSSS%*;*S@#;+%#@@@@@@@@@@#######SSSSSSSSS##SSSS%?%SSSS%%#@@###S##@@@@@@@@@@#@@@@@#@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#SSSSS%SSSSSS%SSS%S%%S%%S%SSS%%%SSSS%?;+%#@#**#@@################SSSS%%%SSS%%%%%%%%??SSSS%%%@@#@S@@####S#@@@@#@@#@@#@#@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#SSSSS%SSSS%SSS%%%%SS%SSSS%S%SS%%S%%?+?#@@S*%#%?*??%############@#########SSS%%%%%%%???%%%%%%@@@@@@###@#@@#@@@@#@@@@@#@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#SSSS%%SSSSSSSSS%%SSSSS%%%SSSSS%%%S*+S@@#?+**++?SS#######@@@@@@@@@@@@@@@@@@@@##SS%%??%%%??%%%%#@@###@@@@@@@@@@##@@@@@@@#@@@@@@@@@@</tspan><tspan x="0" dy="11">#SSSSSSSSSSSSSSSSSSSSSS%%S%SSSS%SS%+S#%*;;+*?S#####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#S%???%%???%%#S##@#@@@@@@@@@@@#@@@@@@@@@@@#@@@@@</tspan><tspan x="0" dy="11">#%S%SSSSSSS%SSSSSSSSSSS%%%SSSS%%%S*+*;:;*%#@@##@@@@@####@@@@@@@@@@@@@@@@####S##@@@@@@#S%???%???S###@@@@@@@@@@@@@@@@#@@@@##@@@@@@@@</tspan><tspan x="0" dy="11">#SS%SS%SSSSSSSSSSS%%SSSS%%SSSSS%%%+;;+%#@@##@@@@#S?;+%S##@#%S#@@@@@@@##%?%##SS%??#@@@@@@#S%??%?%#@#@@####@@@@@@@@@#@@#@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#SSSS%SSSSS%SSSSS%%SS%SSS%%SSSSSS?;*S@@@#@@@@@@#%+,;@@?;?%#*,?#@@@@@@%:.*@S**S#@;:?#@@@@@@@#%??*#@@##@@@#@@@@@@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#SSSSSSSSSSSSSSSSSSSS%SSSS%SSSS%*?#@@#@@@@@@@@@@@#?*#@*:**S##@@@@@@@@@#?S@?,+*?@%%@@@@@@@@@@@#S??#@@@@@@#@#@@@@@@@@@@@@@@@@@@@@#@@</tspan><tspan x="0" dy="11">#SSSSSSSSSSSSSSSSSSSSSSSS%SSSS?+S@@#@@@@@@@@@@@@@@@@##@#@@@@@@@@@@@@@@@@@@@@@@@#@@@@@@@@@@@@@@@@%?#@#@@##@@@@@@#@@@#@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">#SSSSSSSSSSSSSSSSSSSSSSS%%%S#%+#@###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@S?###@@#@@@@#@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@SSSSSSSSSSSSSSSSSSSS#SS%SS#S*%@#####@@@@@@@@##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@S?#@@@@@@#@@@@@@@@@@@@#@@@@@@@@#</tspan><tspan x="0" dy="11">@SSSSSSSSSSSSSSSSSSSSSSSSSSSS*#@#####@@@@@@@@##S##@@@@@@@@@@@@@@@###@@@@@@@@@@@@#######@@@@@@@@@@@@%S@@@#@@#@@@@@@@#@@@@##@@@@@#@@</tspan><tspan x="0" dy="11">@SSSSSSSSSSSSSSSSS#SSSSSSS%S#?#@###@@@@@@@@@@@##SSS##################################@@@@@@@@@@@@@@SS@##@@@#@@@@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@SSSSSSSSSSSSSSS######S%SSSS#S%@####@@@@@@@@@@@@@#########SS%%%%%%%%%%%%%SSS#######@@@@@@@@@@@@@@@@S#@@##@@#@@@@#@@#@@@@@@@@@@@#@@</tspan><tspan x="0" dy="11">@SSSSSSSSSSSS###SS#SS#SSSSSS##SS@####@@@@@@@@@@@@@@@@@######SS%%%%%%%%SSS####@@@@@@@@@@@@@@@@@@@@@#S##@#####@@@@@@@@@#@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@SSSSSSSSSSS####S#####SSSS##SSSSS#@####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####@###@@@@###@@@@@@@@@@#@#@@#@@</tspan><tspan x="0" dy="11">@SSSSSS#S#S#######S##S###SS###S##S%S@####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#S##@@#@@@@#@@#@@#@#@@@@@@@@@@@@#@@</tspan><tspan x="0" dy="11">@SSS#SS##########SS##S##SS###SS#S*;+?#########@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##S%%??######@@@#@@@#@@#@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@SSS###############S####S###S##%++++?S@@@##########@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@########S%%%??S@@###@@###@@#@@##@@@@@#@@@@@@@</tspan><tspan x="0" dy="11">@S####S#################S###S#%;;?S?*?@@@S?#@@#######@@@@@@@@@@@@@@@@@@@@@@@@@@@@############SS%%%%?S###@###@#@@@@##@#@###@@@@@@@@</tspan><tspan x="0" dy="11">@S###SS######################?;**?#@#*?@@@%+%@@@@@#####@@@@@@@@@@@@@@@@@@@@@@@###########@@##S%%SSS%%S@@#@@####@#@####@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@#########################S#%;+?###@@?+S@@@?;%@@@@@@@@###@@@@@@@@@@@@@@@@@@@@@#####SSSS#@@@##SS###S%%%S###@#####@@@#@@@@@@@@@#@@@@</tspan><tspan x="0" dy="11">@########################SS?+%S#@@@@@#?%@@@#;*#@@@@@@@@@@##@@@@@@@@@@@@@@@@@@#####SSSS##@@@#SS#@@#SSS%%S#############@##@##@@@##@#</tspan><tspan x="0" dy="11">@#######################S#%;*@@@@@@@@@@@@@#?;+?%%%%%%%%%%%%?%%%%%%%%%%%%%%%%%%%%%%%%%%%S@@@#S#@@#SSS###SS####################@####</tspan><tspan x="0" dy="11">@######################@#*;+*#@@@@@@@@@@@#+%SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS#############@@##@@#####@@##SS########################</tspan><tspan x="0" dy="11">@###############@@@#####+;%#??@@@@@@@@@@@#?#########################################@##@##@##@@####SSSSSS%S#######################</tspan><tspan x="0" dy="11">@############@@@###@@##?**#@@*?#@@@@@@@@@#?S#S#S############################################@@@@##########S#######################</tspan><tspan x="0" dy="11">@#######@##@@@@####@@@#*??%#@@%?#@@@@@@@@@?S#SSSSS#############SSSS####################@###@@@@#######@###S#######################</tspan><tspan x="0" dy="11">@#####@@@@@#@@##@@#@@@#+?#@@@@@#@@@@@@@@@@?S#SSSSSS############%%%?S######################%%SS##SSSSSSS##SSS######################</tspan><tspan x="0" dy="11">@###@@@@@@@@@@@@#@#@@@S*@@@@@@@@@@@@@@@@@@?%#SS#SSS############SSSS####################@###SSSS#@#####S#####S#####################</tspan><tspan x="0" dy="11">@@@@@@@@@@@@@@@@#@@@@@S*?S#@@@@@@@@@@@@@@@?%#####S#################################@@@@@@##############SSSSSS#####################</tspan><tspan x="0" dy="11">@@@@@@@@@@@@@@@@@@@@@@%+*?S@@@@@@@@@@@@@@@%%################################@@@@@@@@@@@@@#@@############SSSSS#####################</tspan><tspan x="0" dy="11">@#####################S%%SS##@@@@@@@@@@@@@S%################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@###############@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@SSSSSSSSSSSSSSSSSSSSSSSSSS###############S%#######@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####@@@######@@@@@@@@@@@</tspan><tspan x="0" dy="11">@######################SS#################S%#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@####################@@@@@@@</tspan><tspan x="0" dy="11">@######################S#####################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@###############################@@@@@@@@@</tspan><tspan x="0" dy="11">@##################################################################################################################@##@@@@@@@@@@@@</tspan><tspan x="0" dy="11">@##################################################################################################@@@#@####@@@@@@@@@@@@@@@@@@@@@@</tspan></text>
+    </g>
+    
+    <!-- Text Content (Right Side) -->
+    <g transform="translate({text_x}, 0)">
+
+        <text x="0" y="80" class="cmd-text" clip-path="url(#clip-prompt)">user@github ~ % ./profile.sh --info</text>
+
+        <text x="0" y="115" class="cmd-text" clip-path="url(#clip-line-0)">
+            <tspan class="key-text" font-weight="bold">Subject     </tspan> 
+            <tspan class="val-text">Dein Name</tspan>
+        </text>
+
+        <text x="0" y="137" class="cmd-text" clip-path="url(#clip-line-1)">
+            <tspan class="key-text" font-weight="bold">Role        </tspan> 
+            <tspan class="val-text">Software Developer</tspan>
+        </text>
+
+        <text x="0" y="159" class="cmd-text" clip-path="url(#clip-line-2)">
+            <tspan class="key-text" font-weight="bold">Origin      </tspan> 
+            <tspan class="val-text">Germany</tspan>
+        </text>
+
+        <text x="0" y="181" class="cmd-text" clip-path="url(#clip-line-3)">
+            <tspan class="key-text" font-weight="bold">Status      </tspan> 
+            <tspan class="val-text">Building, learning, coding</tspan>
+        </text>
+
+        <text x="0" y="203" class="cmd-text" clip-path="url(#clip-line-4)">
+            <tspan class="key-text" font-weight="bold">Toolchain   </tspan> 
+            <tspan class="val-text">Python, VS Code, Git</tspan>
+        </text>
+
+        <text x="0" y="247" class="cmd-text" clip-path="url(#clip-line-6)">
+            <tspan class="key-text" font-weight="bold">Core Lang   </tspan> 
+            <tspan class="val-text">Python, JavaScript, C++</tspan>
+        </text>
+
+        <text x="0" y="269" class="cmd-text" clip-path="url(#clip-line-7)">
+            <tspan class="key-text" font-weight="bold">Frontend    </tspan> 
+            <tspan class="val-text">React, HTML, CSS</tspan>
+        </text>
+
+        <text x="0" y="291" class="cmd-text" clip-path="url(#clip-line-8)">
+            <tspan class="key-text" font-weight="bold">Backend     </tspan> 
+            <tspan class="val-text">Node.js, Django, FastAPI</tspan>
+        </text>
+
+        <text x="0" y="313" class="cmd-text" clip-path="url(#clip-line-9)">
+            <tspan class="key-text" font-weight="bold">Database    </tspan> 
+            <tspan class="val-text">PostgreSQL, MySQL</tspan>
+        </text>
+
+        <rect x="0" y="323" width="10" height="15" class="cursor" opacity="0">
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.23499999999999993;0.24499999999999994;1" dur="10s" fill="freeze" />
+        </rect>
+
+    </g>
+</svg>
