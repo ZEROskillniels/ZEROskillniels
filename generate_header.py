@@ -14,14 +14,14 @@ CONFIG = {
     # Text Configuration
     "prompt": "user@github ~ % ./profile.sh --info",
     "details": [
-        ("Subject", "Dein Name"),
+        ("Subject", "Zero"),
         ("Role", "Software Developer"),
         ("Origin", "Germany"),
         ("Status", "Building, learning, coding"),
         ("Toolchain", "Python, VS Code, Git"),
         ("", ""),
-        ("Core Lang", "Python, JavaScript, C++"),
-        ("Frontend", "React, HTML, CSS"),
+        ("Core Lang", "Python, JavaScript "),
+        ("Frontend", "Next.js, HTML, CSS"),
         ("Backend", "Node.js, Django, FastAPI"),
         ("Database", "PostgreSQL, MySQL"),
     ],
