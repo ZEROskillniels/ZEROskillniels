@@ -106,7 +106,7 @@
 
         <text x="40" y="765" class="cmd-text" clip-path="url(#clip-line-0)">
             <tspan class="key-text" font-weight="bold">Subject     </tspan> 
-            <tspan class="val-text">Dein Name</tspan>
+            <tspan class="val-text">Zero</tspan>
         </text>
 
         <text x="40" y="787" class="cmd-text" clip-path="url(#clip-line-1)">
@@ -131,12 +131,12 @@
 
         <text x="40" y="897" class="cmd-text" clip-path="url(#clip-line-6)">
             <tspan class="key-text" font-weight="bold">Core Lang   </tspan> 
-            <tspan class="val-text">Python, JavaScript, C++</tspan>
+            <tspan class="val-text">Python, JavaScript </tspan>
         </text>
 
         <text x="40" y="919" class="cmd-text" clip-path="url(#clip-line-7)">
             <tspan class="key-text" font-weight="bold">Frontend    </tspan> 
-            <tspan class="val-text">React, HTML, CSS</tspan>
+            <tspan class="val-text">Next.js, HTML, CSS</tspan>
         </text>
 
         <text x="40" y="941" class="cmd-text" clip-path="url(#clip-line-8)">
