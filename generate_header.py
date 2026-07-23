@@ -94,7 +94,7 @@ def generate_svg(ascii_art):
     <style>
         .terminal-bg {{ fill: {CONFIG['bg_color']}; stroke: {CONFIG['border_color']}; stroke-width: 1; rx: 10; }}
         .header-bar {{ fill: #161b22; rx: 10; }}
-        .ascii-text {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 10px; font-weight: bold; fill: {CONFIG['theme_color']}; opacity: 0; animation: fadein 2s forwards; }}
+        .ascii-text {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 10px; font-weight: bold; fill: {CONFIG['theme_color']}; }}
         .cmd-text {{ font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 16px; fill: {CONFIG['text_color']}; font-weight: bold; }}
         .key-text {{ fill: {CONFIG['theme_color']}; font-weight: bold; }}
         .val-text {{ fill: {CONFIG['text_color']}; }}
@@ -161,25 +161,25 @@ def generate_svg(ascii_art):
         <text xml:space="preserve" class="ascii-text">"""
     for i, line in enumerate(ascii_art.split('\n')):
         if line:
-            svg += f'<tspan x="0" dy="{11 if i>0 else 0}">{escape_xml(line)}</tspan>'
+            delay = i * 0.04
+            svg += f'<tspan x="0" dy="{11 if i>0 else 0}" style="opacity: 0; animation: fadein 0.5s {delay}s forwards">{escape_xml(line)}</tspan>'
     
     svg += """</text>
     </g>
     
     <!-- Text Content (Right Side) -->
-    <g transform="translate({text_x}, 0)">
 """
     
     # Prompt
     svg += f"""
-        <text x="0" y="{y_offset}" class="cmd-text" clip-path="url(#clip-prompt)">{escape_xml(CONFIG['prompt'])}</text>
+        <text x="{text_x}" y="{y_offset}" class="cmd-text" clip-path="url(#clip-prompt)">{escape_xml(CONFIG['prompt'])}</text>
 """
     
     # Details
     for i, (k, v) in enumerate(CONFIG["details"]):
         if k or v:
             svg += f"""
-        <text x="0" y="{y_offset + 35 + i*22}" class="cmd-text" clip-path="url(#clip-line-{i})">
+        <text x="{text_x}" y="{y_offset + 35 + i*22}" class="cmd-text" clip-path="url(#clip-line-{i})">
             <tspan class="key-text" font-weight="bold">{escape_xml(k.ljust(12))}</tspan> 
             <tspan class="val-text">{escape_xml(v)}</tspan>
         </text>
@@ -188,13 +188,9 @@ def generate_svg(ascii_art):
     # Cursor
     cursor_y = y_offset + 35 + len(CONFIG["details"])*22
     svg += f"""
-        <rect x="0" y="{cursor_y-12}" width="10" height="15" class="cursor" opacity="0">
+        <rect x="{text_x}" y="{cursor_y-12}" width="10" height="15" class="cursor" opacity="0">
             <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;{min(1.0, start_delay/10)};{min(1.0, (start_delay+0.1)/10)};1" dur="10s" fill="freeze" />
         </rect>
-"""
-    
-    svg += """
-    </g>
 </svg>
 """
     return svg
