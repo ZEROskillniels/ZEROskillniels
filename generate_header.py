@@ -163,9 +163,12 @@ def generate_svg():
             </g>
         </g>
         
-        <!-- Inject the generated GitHub Snake SVG -->
-        <g transform="translate(50, 440)">
-            {snake_svg_content}
+        <!-- Snake Glass Panel -->
+        <g class="glass-panel" transform="translate(50, 440)" style="animation-delay: -4s;">
+            <rect x="0" y="0" width="900" height="240" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
+            <g transform="translate(35, 10)">
+                {snake_svg_content}
+            </g>
         </g>
         
         <!-- Outer Card Border -->
