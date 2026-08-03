@@ -140,34 +140,38 @@ def generate_svg():
         <circle cx="920" cy="180" r="1.5" fill="#047857" class="star" style="animation-delay: 0.8s;" />
 
         <!-- Header Glass Panel -->
-        <g class="glass-panel" transform="translate(0, 0)">
-            <rect x="50" y="30" width="900" height="390" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
-            
-            <image href="{avatar_b64}" x="{center_x - 45}" y="65" width="90" height="90" clip-path="url(#avatar-clip)" />
-            <circle cx="{center_x}" cy="110" r="46" fill="none" stroke="rgba(16, 185, 129, 0.5)" stroke-width="2" />
-            
-            <text x="{center_x}" y="195" class="title">{CONFIG['name']}</text>
-            <text x="{center_x}" y="230" class="subtitle">{CONFIG['role']}</text>
-            
-            <text x="{center_x}" y="280" class="desc">{CONFIG['description_lines'][0]}</text>
-            <text x="{center_x}" y="305" class="desc">{CONFIG['description_lines'][1]}</text>
-            
-            <g transform="translate(0, 345)">
-                {badges_svg}
-            </g>
-            
-            <g transform="translate(780, 50)">
-                <rect width="130" height="30" rx="15" fill="rgba(16, 185, 129, 0.05)" stroke="rgba(16, 185, 129, 0.3)" />
-                <circle cx="20" cy="15" r="4" fill="#10b981" class="star" />
-                <text x="35" y="19" class="badge-text" fill="#10b981">{CONFIG['status']}</text>
+        <g transform="translate(0, 0)">
+            <g class="glass-panel">
+                <rect x="50" y="30" width="900" height="390" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
+                
+                <image href="{avatar_b64}" x="{center_x - 45}" y="65" width="90" height="90" clip-path="url(#avatar-clip)" />
+                <circle cx="{center_x}" cy="110" r="46" fill="none" stroke="rgba(16, 185, 129, 0.5)" stroke-width="2" />
+                
+                <text x="{center_x}" y="195" class="title">{CONFIG['name']}</text>
+                <text x="{center_x}" y="230" class="subtitle">{CONFIG['role']}</text>
+                
+                <text x="{center_x}" y="280" class="desc">{CONFIG['description_lines'][0]}</text>
+                <text x="{center_x}" y="305" class="desc">{CONFIG['description_lines'][1]}</text>
+                
+                <g transform="translate(0, 345)">
+                    {badges_svg}
+                </g>
+                
+                <g transform="translate(780, 50)">
+                    <rect width="130" height="30" rx="15" fill="rgba(16, 185, 129, 0.05)" stroke="rgba(16, 185, 129, 0.3)" />
+                    <circle cx="20" cy="15" r="4" fill="#10b981" class="star" />
+                    <text x="35" y="19" class="badge-text" fill="#10b981">{CONFIG['status']}</text>
+                </g>
             </g>
         </g>
         
         <!-- Snake Glass Panel -->
-        <g class="glass-panel" transform="translate(50, 440)" style="animation-delay: -4s;">
-            <rect x="0" y="0" width="900" height="240" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
-            <g transform="translate(35, 10)">
-                {snake_svg_content}
+        <g transform="translate(50, 440)">
+            <g class="glass-panel" style="animation-delay: -4s;">
+                <rect x="0" y="0" width="900" height="240" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
+                <g transform="translate(35, 10)">
+                    {snake_svg_content}
+                </g>
             </g>
         </g>
         
