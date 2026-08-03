@@ -12,7 +12,7 @@ CONFIG = {
     "avatar_url": "https://github.com/ZEROskillniels.png",
     
     "badges": ["FIGMA", "REACT", "NODE.JS", "ASTRO", "PYTHON", "ADOBE"],
-    "status": "AVAILABLE",
+    "status": "WORKING FOR TENBYTE ATM",
     
     "width": 1000,
     "height": 720  # Increased height to fit the snake!
@@ -157,8 +157,8 @@ def generate_svg():
                     {badges_svg}
                 </g>
                 
-                <g transform="translate(780, 50)">
-                    <rect width="130" height="30" rx="15" fill="rgba(16, 185, 129, 0.05)" stroke="rgba(16, 185, 129, 0.3)" />
+                <g transform="translate(680, 50)">
+                    <rect width="230" height="30" rx="15" fill="rgba(16, 185, 129, 0.05)" stroke="rgba(16, 185, 129, 0.3)" />
                     <circle cx="20" cy="15" r="4" fill="#10b981" class="star" />
                     <text x="35" y="19" class="badge-text" fill="#10b981">{CONFIG['status']}</text>
                 </g>
