@@ -168,8 +168,8 @@ def generate_svg():
         <!-- Snake Glass Panel -->
         <g transform="translate(50, 440)">
             <g class="glass-panel" style="animation-delay: -4s;">
-                <rect x="0" y="0" width="900" height="200" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
-                <g transform="translate(73, 10)">
+                <rect x="0" y="0" width="900" height="230" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
+                <g transform="translate(10, 19)">
                     {snake_svg_content}
                 </g>
             </g>
