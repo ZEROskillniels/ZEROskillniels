@@ -1,155 +1,158 @@
-<svg width="900" height="1050" viewBox="0 0 900 1050" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <style>
-        .terminal-bg { fill: #0d1117; stroke: #23d18b; stroke-width: 1; rx: 10; }
-        .header-bar { fill: #161b22; rx: 10; }
-        .ascii-text { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 8px; font-weight: bold; fill: #23d18b; }
-        .cmd-text { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-size: 16px; fill: #c9d1d9; font-weight: bold; }
-        .key-text { fill: #23d18b; font-weight: bold; }
-        .val-text { fill: #c9d1d9; }
-        .cursor { fill: #23d18b; animation: blink 1s step-end infinite; }
-        
-        @keyframes scan {
-            0%, 5% { opacity: 1; text-shadow: 0 0 5px #23d18b; }
-            15%, 100% { opacity: 0.3; text-shadow: none; }
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-    </style>
-    
-    <!-- Background -->
-    <rect x="1" y="1" width="898" height="1048" class="terminal-bg" />
-    <path d="M1 11 Q1 1 11 1 L889 1 Q899 1 899 11 L899 30 L1 30 Z" fill="#161b22" stroke="#23d18b" stroke-width="1"/>
-    
-    <!-- Window controls -->
-    <circle cx="20" cy="15" r="6" fill="#ff5f56" />
-    <circle cx="40" cy="15" r="6" fill="#ffbd2e" />
-    <circle cx="60" cy="15" r="6" fill="#27c93f" />
-    
-    <!-- Title -->
-    <text x="450.0" y="20" font-family="ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace" font-size="14" fill="#8b949e" text-anchor="middle">~/profile.sh</text>
-
-    <!-- Clip Paths for Typing Animation -->
+<svg width="1000" height="450" viewBox="0 0 1000 450" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
+        <!-- Background Blur Filters for Nebulas -->
+        <filter id="blur-heavy" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="80" />
+        </filter>
+        
+        <!-- Glassmorphism Filter -->
+        <filter id="glass-blur" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="12" result="blur" />
+            <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="glow" />
+            <feMerge>
+                <feMergeNode in="glow"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
 
-        <clipPath id="clip-prompt">
-            <rect x="40" y="715" width="0" height="25">
-                <animate attributeName="width" from="0" to="800" begin="0.5s" dur="0.3s" fill="freeze" />
-            </rect>
+        <!-- Gradients -->
+        <linearGradient id="glass-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255, 255, 255, 0.08)"/>
+            <stop offset="100%" stop-color="rgba(255, 255, 255, 0.01)"/>
+        </linearGradient>
+        
+        <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#22d3ee" />
+            <stop offset="50%" stop-color="#60a5fa" />
+            <stop offset="100%" stop-color="#3b82f6" />
+        </linearGradient>
+        
+        <!-- Grid Pattern -->
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+            <circle cx="40" cy="40" r="1" fill="rgba(255,255,255,0.1)"/>
+        </pattern>
+        
+        <clipPath id="avatar-clip">
+            <circle cx="100" cy="100" r="45" />
         </clipPath>
-
-        <clipPath id="clip-line-0">
-            <rect x="40" y="747" width="0" height="25">
-                <animate attributeName="width" from="0" to="800" begin="1.0s" dur="0.15s" fill="freeze" />
-            </rect>
-        </clipPath>
-
-        <clipPath id="clip-line-1">
-            <rect x="40" y="769" width="0" height="25">
-                <animate attributeName="width" from="0" to="800" begin="1.15s" dur="0.15s" fill="freeze" />
-            </rect>
-        </clipPath>
-
-        <clipPath id="clip-line-2">
-            <rect x="40" y="791" width="0" height="25">
-                <animate attributeName="width" from="0" to="800" begin="1.2999999999999998s" dur="0.15s" fill="freeze" />
-            </rect>
-        </clipPath>
-
-        <clipPath id="clip-line-3">
-            <rect x="40" y="813" width="0" height="25">
-                <animate attributeName="width" from="0" to="800" begin="1.4499999999999997s" dur="0.15s" fill="freeze" />
-            </rect>
-        </clipPath>
-
-        <clipPath id="clip-line-4">
-            <rect x="40" y="835" width="0" height="25">
-                <animate attributeName="width" from="0" to="800" begin="1.5999999999999996s" dur="0.15s" fill="freeze" />
-            </rect>
-        </clipPath>
-
-        <clipPath id="clip-line-6">
-            <rect x="40" y="879" width="0" height="25">
-                <animate attributeName="width" from="0" to="800" begin="1.7499999999999996s" dur="0.15s" fill="freeze" />
-            </rect>
-        </clipPath>
-
-        <clipPath id="clip-line-7">
-            <rect x="40" y="901" width="0" height="25">
-                <animate attributeName="width" from="0" to="800" begin="1.8999999999999995s" dur="0.15s" fill="freeze" />
-            </rect>
-        </clipPath>
-
-        <clipPath id="clip-line-8">
-            <rect x="40" y="923" width="0" height="25">
-                <animate attributeName="width" from="0" to="800" begin="2.0499999999999994s" dur="0.15s" fill="freeze" />
-            </rect>
-        </clipPath>
-
-        <clipPath id="clip-line-9">
-            <rect x="40" y="945" width="0" height="25">
-                <animate attributeName="width" from="0" to="800" begin="2.1999999999999993s" dur="0.15s" fill="freeze" />
-            </rect>
-        </clipPath>
-
     </defs>
+
+    <style>
+        .title { font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 38px; font-weight: 800; fill: #ffffff; letter-spacing: -0.5px; text-transform: uppercase; }
+        .subtitle { font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 600; fill: url(#text-grad); text-transform: uppercase; letter-spacing: 3px; }
+        .desc { font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 15px; fill: #94a3b8; font-weight: 400; }
+        .badge-text { font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 11px; fill: #cbd5e1; font-weight: 600; letter-spacing: 1.5px; }
+        
+        /* Floating Animations for Nebulas */
+        @keyframes float1 { 0%, 100% { transform: translate(0px, 0px) scale(1); } 50% { transform: translate(40px, -50px) scale(1.1); } }
+        @keyframes float2 { 0%, 100% { transform: translate(0px, 0px) scale(1); } 50% { transform: translate(-50px, 30px) scale(1.15); } }
+        @keyframes float3 { 0%, 100% { transform: translate(0px, 0px) scale(1); } 50% { transform: translate(30px, 50px) scale(0.9); } }
+        
+        .nebula-1 { animation: float1 18s ease-in-out infinite; transform-origin: center; }
+        .nebula-2 { animation: float2 22s ease-in-out infinite; transform-origin: center; }
+        .nebula-3 { animation: float3 25s ease-in-out infinite; transform-origin: center; }
+        
+        /* Star Pulsing */
+        @keyframes pulse-star { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.3); } }
+        .star { animation: pulse-star 4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+        
+        /* Data Routes */
+        @keyframes dash { to { stroke-dashoffset: -400; } }
+        .data-path { stroke-dasharray: 4 12; animation: dash 20s linear infinite; }
+        
+        /* Glass hover effect simulation (gentle float) */
+        @keyframes glass-float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
+        .glass-panel { animation: glass-float 8s ease-in-out infinite; }
+    </style>
+
+    <!-- Deep Space Background -->
+    <rect width="100%" height="100%" fill="#050505" />
     
-    <!-- ASCII Art (Top Side) -->
-    <g transform="translate(20, 50)">
-        <text xml:space="preserve" class="ascii-text"><tspan x="0" dy="0" style="opacity: 0.3; animation: scan 4.0s 0.0s infinite linear">@#######################################@@@@@@#@##@@@#@@@#@@##@@@@@@#@@@@@@@####@@@@@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.05714285714285714s infinite linear">@###S#S###S##########SS#####S##########S######S###@####@##@@####@@@###@#@@@S##@#@@@@@@S#@@@@@##@#@@@@#@@#@@@#@@@@@@@@@@@@@@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.11428571428571428s infinite linear">@##SS#SS#############SS#####S###S###SS#S######%######SS@@@######@@@#S#@###@##@@S#@@@@@#@#@#@###@S##@##@@S#@@S@@@@@@@@@@@@@@##@@#@@@@#@@@@@@@@@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.17142857142857143s infinite linear">@SSSSS%S##SSSSSSS###S#S#####%S#SS###SS#SSS#S##S####S#SS####S###S@@@#S@####@S#@@S#@@@S@####S##SS@###@#S@@@@@@S@##@@@##@@@#@@@#@@#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.22857142857142856s infinite linear">@SSSSS%SSSSSSSSSSSSSSSS##SS#SSSS%SSS###S######%S#SSS#SS######S####@###@##S@S###SS@@#%#%####@@##@@#@@SS#@@@#@#@#@@@@##@@@@@##@@@#@@@@@@@@@@#@@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.2857142857142857s infinite linear">@SSSSSSSSS%SSSSS%SSSSSS#SSS#SS%SSS##SS#%######%S#S###SS####SS%###%#SSS###S#S##SSS@@#%@S##@@@@SS@@##@#S#@@@#@S@#@@@@#@@@@@@##@@@#@@@@@@@@@@@@###@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.34285714285714286s infinite linear">@SSSSS%SSSSSSSSS%SSSS%SSSSS#SSSSS#SSSS#S##SS##?S##SS#SS######S#S#S#S%##S#@@SS##%S##@S@##%#@@@SS@S##@@S#@@@@@S@S#@@@##@@@@@#S@@@##@@@#@@@@@#@@#@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.4s infinite linear">@S%SSSSSSSSS%SSS%SSS%%%SSS#S%S#S%S#S##S%###S#S%###SS#S%%###S###S###S%##S#@@S###%##S@@@S###S#S#S@S#@@@SS@@@#@%#S##@@SS@###@#S@@@##@#@#@#@#@@@###@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.45714285714285713s infinite linear">@SS%%SS%SSSS%SSSSSSS%SSSSSSS%S#SSSSSSSS%#SSS##S####S#SSS#S#S#S#S####SS####@SS%SS#@#@#@S###S#@SS@##@@@S@@#@#@%#S#S#@##@@@@@@#@@@#S@#@S@#@#@@@@@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.5142857142857142s infinite linear">@S%%SS%%SS%SSS%S%SSS%SSSSSSS%%%%%%SSSS#SS%###S%%SSS#SSS#####S%#S#S#S%##SS%%?%SSSSS%S%###S#S@@SS@@#@@S%S@@@#@%@S#S@####@@@@@@@@@#S@@@#@#@S@@@@@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.5714285714285714s infinite linear">@S%%%SS%SSSS%S%SSSSS?%SSSSSS?%%%%SSSSSS%#SSS#S%SSSSSS%S#S%SS#S#S#S#%???**%S##S##SSS%%%?SS@@@##S@@#S@##S@#@#@S@#@@@S#S#@@#@@#@@@#S@@@@@S@#@@@@@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.6285714285714286s infinite linear">@SS%%SS%%S%S%S%SSS%S%%%S%SSS%S%SSSS#SSS%#SSSSS%SS%SS#SS##SS%SS#S#S?+++*%S####S###SSSS%????S##SS@##S@##S#S#%#@@#@#@@##@@##@@#@@#S@@#@@@#@@@#@@#S@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.6857142857142857s infinite linear">@S%%%S%%%%%SSS%S%S%S%%%SSSSS%S%%%%SSSSS%SS##SS?%SSSS#SSS#SSSSSS?*;;+*?%S#####S###SSSS%%?***?%%S@@##@#S#@#@#@#@#@S#@##@SS@@@#@@#S#@@@@@@@@@@@@@@@##@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.7428571428571429s infinite linear">@SS%%%%%S%%SS%%S%SSS%%SSSS%S%S%%%%SSSSS%SS%%#S%SSSS##S%%####S?+;;++*??%S##########SSSS%?**????*%#@@@##@@@@S#S@#@#@@S#@S#@@##@@#S#@@@S@@@@@#@@@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.8s infinite linear">@%%SS%%%%S%S%S%S%S%S%%%S%SSS%S%%%SSSS%S%%%%%#S%SS%SS#%%%S%S%+;+++++*??%S#######@##SSSSS%?**%%%%?*%S@###@#@S@#@@@@@@SS@##@@#S@@@#@@#@#@#@@@#@@@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.8571428571428571s infinite linear">@%%%%%%%%%%S%SSS%S%%%%SS%%%S?SSS%%S%S%S%SSSSSSS#S%%?SSSSS%*;+**+;++*?%S###########SSSSSS%?*?%SS%%?*SSS#@#@#@#@@@@@%SS@S#@@@S#@@@@@@@#@@@#@@@@@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.9142857142857143s infinite linear">@%%%%S%%SSSS%SSSSS%SS%SS%%%S%%SS%S%%S%S%S%S%%?%S#SSS#S%S%++%#%*;;+*%S##############SSSSSSS%*?SSSS%%*?##@#@#@#@@@@@%#@@@@@@#######@@@@@@@#@@@@@#@@@#@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 0.9714285714285714s infinite linear">@%%%%S%%SSSSSSS%?S%S%%SSSSSSSS%S%SS%S%S%%%SS%%%SS%%%S%S*;*#@@?;;+?S#@###@@#####@#####SSSSSSS??S#SSS%??S@#@#@S##@@@###@#@#@SSS#@##@#@@@#@@@@@###@@@#@#@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.0285714285714285s infinite linear">@S%SSS%%SSSSSS%S%SSS%%%S%SSSS%%S%S%%SSS%SSSSSS%S%?SSS?+;?#@#*;;*%S#@##@@@@@@###@#########SSSS%?%S#SSS%?%%@@@S@#@@@SS#@@@@@####@#S@#@#@#@@@@@@@#@@@@@#@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.0857142857142856s infinite linear">@SSSSSSSSSS%%S%SSS%SSS%S%SSS%SSS%S%%%%%?SS%%SS%SSSS%%;+S@@S+;+*%######@@@@@@@##@########SSSSSSS%?S#SSSS%?%#@#@@@#@SS#@@@#@##@@#@#@@@@@@@@@@@@@S@@@#@#@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.1428571428571428s infinite linear">@S%SSS%%%SSSSS%%%S%SSSSS%SSS?%%%SSSS%%%%SS%%S%?%SSS*;*S@@%+;+?S########@@@@@###@######SSSSSSSSSS%?%SSSSS%%?SS@S##@##S#@@#@##@@##S@@@#@@@@@@@@@@@@@@@#@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.2s infinite linear">@%%%%S%%SS%SSS%S%SSSS%%SS%%S%S%%%SSSSS%%SSSS%%%SS%+;*S@#?;;+%#######@@@@@@@####@####SSSSSSSSSSSSSS%?%SSSSS%??#@@#@##%#@@@@@@@@S##@@@#@#@@@@@###@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.2571428571428571s infinite linear">@%%%%S%%SS%SSS%S%S%S%%%S%SSS%S%S%%SSSSS%SSSSSS%S?;;*S@@*;+?S#@#@@@@@@@@@@@@####@#SSSSSSSSSS###SSSSSS%?%SSSS%%?S@@@##S####@@@@@@@@@@@@@#@#@@@@@#@@#@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.3142857142857143s infinite linear">@SS%SSS%%SSS%S%S%SSSS%SS?SSS?S%%%%SS%?S%SSSSS%%+;+?S@@%;*S@@@@@@@@@@#########S##SSS%%%%%%SSSSSSSSSSS%%??SSSSS%?%S@@##@S#@@###@###@@@@@#@@@#@@@S@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.3714285714285714s infinite linear">@SSSSS%%%SSS%SSSSSSS%%%S%SSS%S%%SSSSSSS%SS%%S?+;?S@@@%+%@@#S%%SSS###################SSSSSSSSS%%%%%%%%%?**%SSS%%%?#@@@@S#@@##@@#S#@#@@@#@#@@@@@@@#@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.4285714285714286s infinite linear">@SSS%SS%%S%S%S%SSS%S%%%SSS%SSSSS%SSSSS%%SS%%?;+S@@@#?*S#%*+**?%S###########@@@#@@#@@@########SSSS%%??%%%%???%%%%%?S##@@@#@#@#@@@@@#@@@@@#@@@@@@@#@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.4857142857142858s infinite linear">@SSSSS%%%SSSSSSSSS%S%%SSSSSS%S%%%SSSSS%%%%S?;?#@@#%++*+;;*%S##########@@@@@@@@@@@@@@@@@@@@@@@@@###SS%%???%%%???%SS%%#@@@#@##@@@@@@#@@@@@S#@@@@@@@@#@@@@@#@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.542857142857143s infinite linear">@SSSSSSSSSSS%SSS%S%S%SSSSSSSSS%S%SSSSSS%SS%;%@#%?+;;;+*%##@#####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##S%????%%%?*?%%%@S##@@##@@@@@@@@@@@#@#@@@#@#@@@@@@@#@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.6s infinite linear">@S%SSSSSSSSSSS%SSSSSSSSSSS%S%%%S%SSS%%%%SS*+?*+;:;+?S#@@####@@@@@@@@@@@@@@@@@@@@@@@@@@@@#######@@@@@@@@##S%????%%?*??#####@#@@@@@@@@#@@@#@@@@@#@@@@@#@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.6571428571428573s infinite linear">@S%%%SSS%SSS%SSSSS%SSS%SSSSS%S?%SSSSSS%?S%+;;;;+?S#@@###@@@@@@#S??%%####@@@@@@@@@@@@@@@@##SSS%%%%S#@@@@@@@##S%?*?%%??%##@@@@@@###@@@@@#@@@@@#@#@@@@@@#@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.7142857142857142s infinite linear">@SS%%SSSSSSS%SSSSSSSSS%S%S%S%S%%SSS%SSS%S%;;;+%#@@###@@@@@#S%*:,*S#@S#@@%+?%#@@@@@@@@S%*++S#@##@#%;+%S#@@@@@@##S?**%%?#@#####@#@#@@@#@@@@@@@@@#@#@@@@@#@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.7714285714285714s infinite linear">@SSSSS%SSSSSSS%SSS%SSS%SSS%S%S%%%%SSSSS%S*;?S@@@##@@@@@@@@#S*;.*@@S+:*?%@;,*#@@@@@@@@%;..#@S*:*%S@S.:?#@@@@@@@@@#S%?**S@@@##@@@@#@@@@@#@#@@@@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.8285714285714285s infinite linear">@SSSSSSSSSSSSSSSSSSSSSSSSS%S%SSS%%SSSSS*+?#@@##@@@@@@@@@@@@@#S**#@S::**?@S#@@@@@@@@@@@#%*#@%,,++*@#?S@@@@@@@@@@@@@@#S?*S@@@@@@@@#@#@@@@@@@@@@@@@@@@@@@@@@@@@#@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.8857142857142857s infinite linear">@SSSSSSSSSSSSSSSSSSSSSSSSS%SSSSSSSS%SS++#@@##@@@@@@@@@@@@@@@@@@#######@@@@@@@@@@@@@@@@@@@@@@#######@@@@@@@@@@@@@@@@@@#%?S@##@@@##@#@@@@@#@@@@@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 1.9428571428571428s infinite linear">@SSSSSSSSSSSSS%S%SSSSS%SSSSSSS%%%%#SS+*@@###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@S?S@##@@@#@@@@@@@#@@@@@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.0s infinite linear">@SSSSSSSSS%S%SSS%SSS%SSSSSSS%S%SSS##*+@@#####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@S?%###@#@@#@@@#@@@#@#@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.057142857142857s infinite linear">@SSSSSSSSSSSSSSSSSSSSSSSSS#S%S%SS#SS+S@######@@@@@@@@@@@###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#@@@@@@@@@@@@@@@@S?#@@#@#@@@#@@@@@@@@@#@@@@@#@@@@@@@@@##</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.1142857142857143s infinite linear">@SSSSSSSSSSS%SSSSSSS%SSSSSSSSSSSSSS%+@@######@@@@@@@@@@@##SS##@@@@@@@@@@@@@@@@########@@@@@@@@@@@@#########@@@@@@@@@@@@@@#%S@@@@#@@@#@@@@@@@@@#@@@@@###@@@@@#@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.1714285714285713s infinite linear">@SSSSSSSSSSSSSSSSS%SSSSSSS%SS#SS%S#S*@@####@@@@@@@@@@@@@@##SSS######@@@############################S#####@@@@@@@@@@@@@@@@@SS@@#@@@@@#@@@@@#@@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.2285714285714286s infinite linear">@SSSSS%SSSSSSSSSSSS#######SS%SSSSS##?S@####@@@@@@@@@@@@@@@@##S##########SSSS%%%%%SSSSS%%%%SSSS#########@@@@@@@@@@@@@@@@@@@SS@@###@@@#@@@@@#@@@#@@@@@@@@@@@@@#@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.2857142857142856s infinite linear">@SSSSSSSSSSSSSS#########S##S%SSSSS##S%#@#####@@@@@@@@@@@@@@@@@@#########SS%%%%%%%%%%%%%%%SSS########@@@@@@@@@@@@@@@@@@@@@@S#@@@##@#@#@@@@@#@@@#@#@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.342857142857143s infinite linear">@SSSSS%SSSSSSSS####SS##S%###S#SS####SS%S@@####@@@@@@@@@@@@@@@@@@@@@@@@####SSSSSSSSSSSSSSS##@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@SS##@#@#@#@#@@@#@@@@@@@@@@@@@#@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.4s infinite linear">@SSSSS%S#SSS%SS############SSSSS##SSSS#S%#@@####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#####@@###@@@@@#@#@#@@@@@@@@@@@#@##@@#@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.4571428571428573s infinite linear">@SSSSSSSS###S#########S###S####SS#######SSS#@@#####@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#S###@#@@@@@@#@@@#@@@#@#@@@@@@@@@@@@@@@#@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.5142857142857142s infinite linear">@SSSS#SSS#S#########SS%###S###SS####SS#SS?+;?S@@########@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#SS%??S@#@###@@@@@@@@@#@@@#@@@@@@@#@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.5714285714285716s infinite linear">@SSSS###################S#####%S###S###%+;;+*%S#@@#@#########@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#####S%%%%??S##@@####@@###@#@@@#@#@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.6285714285714286s infinite linear">@##SS#######S#####################SS##%;;**+*%#@@@#S#@##########@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@###########SSS%%???%#####@@######@@#@@@#@###@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.6857142857142855s infinite linear">@SS#####S#####################S####S#?;;+%#%?*?@@@@%?S@@@@########@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##################SS??%%%?%##@#@@###@##@@@@###@@@#@###@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.742857142857143s infinite linear">@#S###SS######################S####S?;+**?#@@%+%@@@@?+?#@@@@@@######@@@@@@@@@@@@@@@@@@@@@@@@@@@@##############@@###S%%SSSS%%%#@@#@@@#####@#@#####@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.8s infinite linear">@#########################S########?;+*S#S#@@@+*S@@@@?;?#@@@@@@@@#####@@@@@@@@@@@@@@@@@@@@@@@@@@@######SS####@@@##SS%###SS%%%%#@#########@@@@##@@@@@@@@@@@#@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.857142857142857s infinite linear">@###############################SS?+*?%#@@@@@@?+?@@@@S;+%@@@@@@@@@@@####@@@@@@@@@@@@@@@@@@@@@@@#####SSSSSSS#@@@###SS#@@#SSS%%%%##########@@@#####@#@@#@@@@@@#@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.914285714285714s infinite linear">@#############################S##?;?@@@@@@@@@@@SS#@@@#;+?#@@@@@@@@@@@@@###@@@@@@@@@@@@@@@@@######SSSSSSSSSS#@@@@#SSS@@@#SSSSSSSS################@######@##@##@##</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 2.9714285714285715s infinite linear">@#############################S#%;+%@@@@@@@@@@@@@@@@?*++**???????????????*?????????????????????????????????%#@@@##S#@@##S####@@#S##########################@####</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.0285714285714285s infinite linear">@############################@S*;++?@@@@@@@@@@@@@@@?+S########################################################@@###@@######@@@##SS##############################</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.085714285714286s infinite linear">@#####################@#####@%+;?S%*S@@@@@@@@@@@@@@??######################################################@@#@@##@@###@##SSSSSSS%%#############################</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.142857142857143s infinite linear">@##############@@@@@@@@@####S+*+#@@%+%@@@@@@@@@@@@@%?S#S######################################################@##@@@@@###########SSS############################</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.2s infinite linear">@############@@@@@@####@@@@@%*%?S@@@%+?#@@@@@@@@@@@S?S#SSSSSS##############################################@####@@@@@####@@@@@@@################################</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.257142857142857s infinite linear">@########@@@@@@@@@@##@#@@@@@?*??%#@@@#?%@@@@@@@@@@@S*S#SSSSSSS###############S?%S?S#######################@###SS#@@@##############SS############################</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.3142857142857145s infinite linear">@######@@@@@@@#@@##@#@#@@@#@*+S@@@@@@@#@@@@@@@@@@@@#*S#SSSSSSSS##############S%SS%%#@#########################S%%%SS##SSSSSSSSS##SSSS###########################</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.3714285714285714s infinite linear">@####@@@@@@@@@@@@@@@#@#@@@@#*%@@@@@@@@@@@@@@@@@@@@@#*S#SS#SSSSS###############%SSSS########################@@###SSSSS#@######SS#####SS##########################</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.4285714285714284s infinite linear">@#@@#@@@@@@@#@@@@@@@#@@@@@@#*?%S@@@@@@@@@@@@@@##@@@@*%#S####SS########################################@##@@@@#####S#SS########SSS##SSS##########################</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.4857142857142858s infinite linear">@@@@@@@@@@@@@@@@@@@@@@@@@@##+*?%S@@@@@@@@@@@@@@@@@@@?%#S#########################################@@@@@@@@@@@@##@###############SSSSSSSS#########################</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.5428571428571427s infinite linear">@@@@@@@@@@#@@@@@@@@@#@@@@@@S+*??%#@@@@@@@@@@@@@@@@@@?%####################################@@@@@@@@@@@@@@@@@@@@#@@@###@@@@#########SSSSS#########################</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.6s infinite linear">@###########################SSSSS######@@@@@@@@@@@@@%%#################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@######@@@@@@@@@@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.657142857142857s infinite linear">@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS##################%%#########@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@######@@@################@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.7142857142857144s infinite linear">@###########################SSS#####################%%###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.7714285714285714s infinite linear">@####################################################S#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##########################@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.8285714285714287s infinite linear">@############################S#########################@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#####################################@####@@@##@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.8857142857142857s infinite linear">@############################################################################################################################################@@@#@@@@@@@@@@@@@@@</tspan><tspan x="0" dy="9" style="opacity: 0.3; animation: scan 4.0s 3.942857142857143s infinite linear">@###################################################################################################################@####@@@@@#@@####@@@@@@@@@@@@@@@@@@@@@@@@@@@</tspan></text>
+    <!-- Grid -->
+    <rect width="100%" height="100%" fill="url(#grid)" />
+
+    <!-- Animated Nebulas (Colors from Portfolio) -->
+    <!-- Red/Pink -->
+    <circle cx="850" cy="100" r="220" fill="rgba(173, 26, 53, 0.45)" filter="url(#blur-heavy)" class="nebula-1" />
+    <!-- Cyan -->
+    <circle cx="150" cy="350" r="250" fill="rgba(6, 182, 212, 0.35)" filter="url(#blur-heavy)" class="nebula-2" />
+    <!-- Blue -->
+    <circle cx="550" cy="-50" r="180" fill="rgba(59, 130, 246, 0.35)" filter="url(#blur-heavy)" class="nebula-3" />
+
+    <!-- Data Routes in Background -->
+    <path d="M -50 150 Q 200 100 350 250 T 700 350 T 1100 250" fill="none" stroke="rgba(34, 211, 238, 0.2)" stroke-width="1.5" class="data-path" />
+    <path d="M -50 350 Q 300 450 550 200 T 900 100 T 1100 -50" fill="none" stroke="rgba(59, 130, 246, 0.2)" stroke-width="1" class="data-path" style="animation-duration: 25s;" />
+
+    <!-- Animated Stars / Nodes -->
+    <circle cx="120" cy="80" r="2" fill="#fff" class="star" style="animation-delay: 0s;" />
+    <circle cx="850" cy="350" r="3" fill="#22d3ee" class="star" style="animation-delay: 1.2s;" />
+    <circle cx="450" cy="400" r="2" fill="#60a5fa" class="star" style="animation-delay: 2.5s;" />
+    <circle cx="700" cy="120" r="1.5" fill="#fff" class="star" style="animation-delay: 0.5s;" />
+    <circle cx="300" cy="200" r="2.5" fill="#fff" class="star" style="animation-delay: 1.8s;" />
+    <circle cx="920" cy="180" r="1.5" fill="#ad1a35" class="star" style="animation-delay: 0.8s;" />
+
+    <!-- Glassmorphism Panel -->
+    <g class="glass-panel" transform="translate(50, 50)">
+        <!-- Inner Glow & Border -->
+        <rect width="900" height="350" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
+        
+        <!-- Avatar Profile -->
+        <image href="https://github.com/ZEROskillniels.png" x="55" y="55" width="90" height="90" clip-path="url(#avatar-clip)" />
+        <!-- Avatar Ring -->
+        <circle cx="100" cy="100" r="46" fill="none" stroke="rgba(34, 211, 238, 0.5)" stroke-width="2" />
+        
+        <!-- Identity Text -->
+        <text x="180" y="95" class="title">Niels Duske</text>
+        <text x="180" y="130" class="subtitle">UI/UX Designer & Frontend Dev</text>
+        
+        <text x="55" y="195" class="desc">Creating thoughtful digital products through interaction design,</text>
+        <text x="55" y="225" class="desc">user research, and frontend development.</text>
+        
+        <!-- Tech Stack Badges Container -->
+        <g transform="translate(55, 275)">
+            
+        <g transform="translate(0, 0)">
+            <rect x="0" y="0" width="70" height="26" rx="13" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.1)" />
+            <text x="35.0" y="17" text-anchor="middle" class="badge-text">FIGMA</text>
+        </g>
+        <g transform="translate(82, 0)">
+            <rect x="0" y="0" width="70" height="26" rx="13" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.1)" />
+            <text x="35.0" y="17" text-anchor="middle" class="badge-text">REACT</text>
+        </g>
+        <g transform="translate(164, 0)">
+            <rect x="0" y="0" width="86" height="26" rx="13" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.1)" />
+            <text x="43.0" y="17" text-anchor="middle" class="badge-text">NODE.JS</text>
+        </g>
+        <g transform="translate(262, 0)">
+            <rect x="0" y="0" width="70" height="26" rx="13" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.1)" />
+            <text x="35.0" y="17" text-anchor="middle" class="badge-text">ASTRO</text>
+        </g>
+        <g transform="translate(344, 0)">
+            <rect x="0" y="0" width="78" height="26" rx="13" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.1)" />
+            <text x="39.0" y="17" text-anchor="middle" class="badge-text">PYTHON</text>
+        </g>
+        <g transform="translate(434, 0)">
+            <rect x="0" y="0" width="70" height="26" rx="13" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.1)" />
+            <text x="35.0" y="17" text-anchor="middle" class="badge-text">ADOBE</text>
+        </g>
+        </g>
+        
+        <!-- Status Indicator -->
+        <g transform="translate(730, 40)">
+            <rect width="130" height="30" rx="15" fill="rgba(34, 211, 238, 0.05)" stroke="rgba(34, 211, 238, 0.3)" />
+            <circle cx="20" cy="15" r="4" fill="#22d3ee" class="star" />
+            <text x="35" y="19" class="badge-text" fill="#22d3ee">AVAILABLE</text>
+        </g>
+        
+        <!-- Decorative UI Elements on Glass -->
+        <circle cx="860" cy="310" r="3" fill="rgba(255,255,255,0.2)" />
+        <circle cx="875" cy="310" r="3" fill="rgba(255,255,255,0.2)" />
+        <circle cx="860" cy="325" r="3" fill="rgba(255,255,255,0.2)" />
+        <circle cx="875" cy="325" r="3" fill="rgba(255,255,255,0.2)" />
+        
+        <path d="M 55 35 L 75 35" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" />
+        <path d="M 55 315 L 55 295" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" />
     </g>
-    
-    <!-- Text Content (Bottom Side) -->
 
-        <text x="40" y="730" class="cmd-text" clip-path="url(#clip-prompt)">user@github ~ % ./profile.sh --info</text>
-
-        <text x="40" y="765" class="cmd-text" clip-path="url(#clip-line-0)">
-            <tspan class="key-text" font-weight="bold">Subject     </tspan> 
-            <tspan class="val-text">Zero</tspan>
-        </text>
-
-        <text x="40" y="787" class="cmd-text" clip-path="url(#clip-line-1)">
-            <tspan class="key-text" font-weight="bold">Role        </tspan> 
-            <tspan class="val-text">Software Developer</tspan>
-        </text>
-
-        <text x="40" y="809" class="cmd-text" clip-path="url(#clip-line-2)">
-            <tspan class="key-text" font-weight="bold">Origin      </tspan> 
-            <tspan class="val-text">Germany</tspan>
-        </text>
-
-        <text x="40" y="831" class="cmd-text" clip-path="url(#clip-line-3)">
-            <tspan class="key-text" font-weight="bold">Status      </tspan> 
-            <tspan class="val-text">Building, learning, coding</tspan>
-        </text>
-
-        <text x="40" y="853" class="cmd-text" clip-path="url(#clip-line-4)">
-            <tspan class="key-text" font-weight="bold">Toolchain   </tspan> 
-            <tspan class="val-text">Python, VS Code, Git</tspan>
-        </text>
-
-        <text x="40" y="897" class="cmd-text" clip-path="url(#clip-line-6)">
-            <tspan class="key-text" font-weight="bold">Core Lang   </tspan> 
-            <tspan class="val-text">Python, JavaScript </tspan>
-        </text>
-
-        <text x="40" y="919" class="cmd-text" clip-path="url(#clip-line-7)">
-            <tspan class="key-text" font-weight="bold">Frontend    </tspan> 
-            <tspan class="val-text">Next.js, HTML, CSS</tspan>
-        </text>
-
-        <text x="40" y="941" class="cmd-text" clip-path="url(#clip-line-8)">
-            <tspan class="key-text" font-weight="bold">Backend     </tspan> 
-            <tspan class="val-text">Node.js, Django, FastAPI</tspan>
-        </text>
-
-        <text x="40" y="963" class="cmd-text" clip-path="url(#clip-line-9)">
-            <tspan class="key-text" font-weight="bold">Database    </tspan> 
-            <tspan class="val-text">PostgreSQL, MySQL</tspan>
-        </text>
-
-        <rect x="40" y="973" width="10" height="15" class="cursor" opacity="0">
-            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.23499999999999993;0.24499999999999994;1" dur="10s" fill="freeze" />
-        </rect>
-</svg>
+    </svg>
