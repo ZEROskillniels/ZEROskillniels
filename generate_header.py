@@ -5,7 +5,7 @@ import os
 # ==========================================
 CONFIG = {
     "name": "Niels Duske",
-    "role": "UI/UX Designer & Frontend Dev",
+    "role": "UI/UX Designer &amp; Frontend Dev",
     "description_lines": [
         "Creating thoughtful digital products through interaction design,",
         "user research, and frontend development."
