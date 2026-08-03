@@ -1,7 +1,7 @@
 
 
 <p align="center">
-  <img src="header.svg?v=6" width="100%" alt="Mein Space-Terminal Header" />
+  <img src="header.svg?v=7" width="100%" alt="Mein Space-Terminal Header" />
 </p>
 
 <p align="center">

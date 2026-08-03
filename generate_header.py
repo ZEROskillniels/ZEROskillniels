@@ -75,9 +75,9 @@ def generate_svg():
             <stop offset="100%" stop-color="rgba(255, 255, 255, 0.01)"/>
         </linearGradient>
         <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#22d3ee" />
-            <stop offset="50%" stop-color="#60a5fa" />
-            <stop offset="100%" stop-color="#3b82f6" />
+            <stop offset="0%" stop-color="#4ade80" />
+            <stop offset="50%" stop-color="#22c55e" />
+            <stop offset="100%" stop-color="#16a34a" />
         </linearGradient>
         
         <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
@@ -115,28 +115,27 @@ def generate_svg():
     </style>
 
     <rect width="100%" height="100%" fill="#050505" />
-    <rect width="100%" height="100%" fill="url(#grid)" />
+    <!-- Animated Nebulas (Green Shades) -->
+    <circle cx="850" cy="100" r="220" fill="rgba(4, 120, 87, 0.45)" filter="url(#blur-heavy)" class="nebula-1" />
+    <circle cx="150" cy="350" r="250" fill="rgba(16, 185, 129, 0.35)" filter="url(#blur-heavy)" class="nebula-2" />
+    <circle cx="550" cy="-50" r="180" fill="rgba(52, 211, 153, 0.35)" filter="url(#blur-heavy)" class="nebula-3" />
 
-    <circle cx="850" cy="100" r="220" fill="rgba(173, 26, 53, 0.45)" filter="url(#blur-heavy)" class="nebula-1" />
-    <circle cx="150" cy="350" r="250" fill="rgba(6, 182, 212, 0.35)" filter="url(#blur-heavy)" class="nebula-2" />
-    <circle cx="550" cy="-50" r="180" fill="rgba(59, 130, 246, 0.35)" filter="url(#blur-heavy)" class="nebula-3" />
-
-    <path d="M -50 150 Q 200 100 350 250 T 700 350 T 1100 250" fill="none" stroke="rgba(34, 211, 238, 0.2)" stroke-width="1.5" class="data-path" />
-    <path d="M -50 350 Q 300 450 550 200 T 900 100 T 1100 -50" fill="none" stroke="rgba(59, 130, 246, 0.2)" stroke-width="1" class="data-path" style="animation-duration: 25s;" />
+    <path d="M -50 150 Q 200 100 350 250 T 700 350 T 1100 250" fill="none" stroke="rgba(52, 211, 153, 0.2)" stroke-width="1.5" class="data-path" />
+    <path d="M -50 350 Q 300 450 550 200 T 900 100 T 1100 -50" fill="none" stroke="rgba(16, 185, 129, 0.2)" stroke-width="1" class="data-path" style="animation-duration: 25s;" />
 
     <circle cx="120" cy="80" r="2" fill="#fff" class="star" style="animation-delay: 0s;" />
-    <circle cx="850" cy="350" r="3" fill="#22d3ee" class="star" style="animation-delay: 1.2s;" />
-    <circle cx="450" cy="400" r="2" fill="#60a5fa" class="star" style="animation-delay: 2.5s;" />
+    <circle cx="850" cy="350" r="3" fill="#10b981" class="star" style="animation-delay: 1.2s;" />
+    <circle cx="450" cy="400" r="2" fill="#34d399" class="star" style="animation-delay: 2.5s;" />
     <circle cx="700" cy="120" r="1.5" fill="#fff" class="star" style="animation-delay: 0.5s;" />
     <circle cx="300" cy="200" r="2.5" fill="#fff" class="star" style="animation-delay: 1.8s;" />
-    <circle cx="920" cy="180" r="1.5" fill="#ad1a35" class="star" style="animation-delay: 0.8s;" />
+    <circle cx="920" cy="180" r="1.5" fill="#047857" class="star" style="animation-delay: 0.8s;" />
 
     <g class="glass-panel" transform="translate(0, 0)">
         <rect x="50" y="30" width="900" height="390" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
         
         <!-- Avatar -->
         <image href="{avatar_b64}" x="{center_x - 45}" y="65" width="90" height="90" clip-path="url(#avatar-clip)" />
-        <circle cx="{center_x}" cy="110" r="46" fill="none" stroke="rgba(34, 211, 238, 0.5)" stroke-width="2" />
+        <circle cx="{center_x}" cy="110" r="46" fill="none" stroke="rgba(16, 185, 129, 0.5)" stroke-width="2" />
         
         <!-- Identity Text (Centered) -->
         <text x="{center_x}" y="195" class="title">{CONFIG['name']}</text>
@@ -152,9 +151,9 @@ def generate_svg():
         
         <!-- Status Indicator (Top Right inside panel) -->
         <g transform="translate(780, 50)">
-            <rect width="130" height="30" rx="15" fill="rgba(34, 211, 238, 0.05)" stroke="rgba(34, 211, 238, 0.3)" />
-            <circle cx="20" cy="15" r="4" fill="#22d3ee" class="star" />
-            <text x="35" y="19" class="badge-text" fill="#22d3ee">{CONFIG['status']}</text>
+            <rect width="130" height="30" rx="15" fill="rgba(16, 185, 129, 0.05)" stroke="rgba(16, 185, 129, 0.3)" />
+            <circle cx="20" cy="15" r="4" fill="#10b981" class="star" />
+            <text x="35" y="19" class="badge-text" fill="#10b981">{CONFIG['status']}</text>
         </g>
     </g>
 
