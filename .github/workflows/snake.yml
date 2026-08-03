@@ -26,6 +26,14 @@ jobs:
           outputs: |
             dist/github-snake.svg?color_snake=#16a34a&color_dots=#161b22,#064e3b,#047857,#10b981,#34d399
 
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Run generate_header.py
+        run: python generate_header.py
+
       - name: Push Snake SVG to output branch
         uses: crazy-max/ghaction-github-pages@v3.1.0
         with:

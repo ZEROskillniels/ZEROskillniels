@@ -2,9 +2,6 @@ import os
 import urllib.request
 import base64
 
-# ==========================================
-# CONFIGURATION
-# ==========================================
 CONFIG = {
     "name": "Niels Duske",
     "role": "UI/UX Designer &amp; Frontend Dev",
@@ -18,7 +15,7 @@ CONFIG = {
     "status": "AVAILABLE",
     
     "width": 1000,
-    "height": 450
+    "height": 720  # Increased height to fit the snake!
 }
 
 def get_base64_image(url):
@@ -37,10 +34,8 @@ def generate_svg():
     height = CONFIG["height"]
     center_x = width / 2
     
-    # Fetch avatar as base64
     avatar_b64 = get_base64_image(CONFIG["avatar_url"])
     
-    # Calculate total badges width to center the group
     badge_widths = [len(b) * 8 + 30 for b in CONFIG["badges"]]
     total_badges_width = sum(badge_widths) + (len(badge_widths) - 1) * 12
     badges_start_x = center_x - (total_badges_width / 2)
@@ -55,6 +50,12 @@ def generate_svg():
             <text x="{b_width/2}" y="17" text-anchor="middle" class="badge-text">{badge}</text>
         </g>'''
         current_x += b_width + 12
+
+    # Load the snake SVG if it exists (run by GitHub Actions)
+    snake_svg_content = ""
+    if os.path.exists("dist/github-snake.svg"):
+        with open("dist/github-snake.svg", "r", encoding="utf-8") as f:
+            snake_svg_content = f.read()
 
     svg_content = f'''<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -88,6 +89,10 @@ def generate_svg():
         <clipPath id="avatar-clip">
             <circle cx="{center_x}" cy="110" r="45" />
         </clipPath>
+        
+        <clipPath id="card-clip">
+            <rect width="{width}" height="{height}" rx="24" />
+        </clipPath>
     </defs>
 
     <style>
@@ -114,57 +119,70 @@ def generate_svg():
         .glass-panel {{ animation: glass-float 8s ease-in-out infinite; }}
     </style>
 
-    <!-- Transparent Background for Seamless GitHub Integration -->
-    
-    <!-- Grid (Opazität leicht reduziert für besseres Blending) -->
-    <rect width="100%" height="100%" fill="url(#grid)" opacity="0.5" />
-    <circle cx="850" cy="100" r="220" fill="rgba(4, 120, 87, 0.45)" filter="url(#blur-heavy)" class="nebula-1" />
-    <circle cx="150" cy="350" r="250" fill="rgba(16, 185, 129, 0.35)" filter="url(#blur-heavy)" class="nebula-2" />
-    <circle cx="550" cy="-50" r="180" fill="rgba(52, 211, 153, 0.35)" filter="url(#blur-heavy)" class="nebula-3" />
+    <!-- Unified Dashboard Card -->
+    <g clip-path="url(#card-clip)">
+        <rect width="100%" height="100%" fill="#050505" rx="24" />
+        <rect width="100%" height="100%" fill="url(#grid)" opacity="0.5" rx="24" />
 
-    <path d="M -50 150 Q 200 100 350 250 T 700 350 T 1100 250" fill="none" stroke="rgba(52, 211, 153, 0.2)" stroke-width="1.5" class="data-path" />
-    <path d="M -50 350 Q 300 450 550 200 T 900 100 T 1100 -50" fill="none" stroke="rgba(16, 185, 129, 0.2)" stroke-width="1" class="data-path" style="animation-duration: 25s;" />
+        <!-- Nebulas extending down -->
+        <circle cx="850" cy="150" r="280" fill="rgba(4, 120, 87, 0.45)" filter="url(#blur-heavy)" class="nebula-1" />
+        <circle cx="150" cy="450" r="300" fill="rgba(16, 185, 129, 0.35)" filter="url(#blur-heavy)" class="nebula-2" />
+        <circle cx="650" cy="600" r="250" fill="rgba(52, 211, 153, 0.35)" filter="url(#blur-heavy)" class="nebula-3" />
 
-    <circle cx="120" cy="80" r="2" fill="#fff" class="star" style="animation-delay: 0s;" />
-    <circle cx="850" cy="350" r="3" fill="#10b981" class="star" style="animation-delay: 1.2s;" />
-    <circle cx="450" cy="400" r="2" fill="#34d399" class="star" style="animation-delay: 2.5s;" />
-    <circle cx="700" cy="120" r="1.5" fill="#fff" class="star" style="animation-delay: 0.5s;" />
-    <circle cx="300" cy="200" r="2.5" fill="#fff" class="star" style="animation-delay: 1.8s;" />
-    <circle cx="920" cy="180" r="1.5" fill="#047857" class="star" style="animation-delay: 0.8s;" />
+        <path d="M -50 150 Q 200 100 350 250 T 700 350 T 1100 250" fill="none" stroke="rgba(52, 211, 153, 0.2)" stroke-width="1.5" class="data-path" />
+        <path d="M -50 450 Q 300 550 550 300 T 900 200 T 1100 50" fill="none" stroke="rgba(16, 185, 129, 0.2)" stroke-width="1" class="data-path" style="animation-duration: 25s;" />
 
-    <g class="glass-panel" transform="translate(0, 0)">
-        <rect x="50" y="30" width="900" height="390" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
-        
-        <!-- Avatar -->
-        <image href="{avatar_b64}" x="{center_x - 45}" y="65" width="90" height="90" clip-path="url(#avatar-clip)" />
-        <circle cx="{center_x}" cy="110" r="46" fill="none" stroke="rgba(16, 185, 129, 0.5)" stroke-width="2" />
-        
-        <!-- Identity Text (Centered) -->
-        <text x="{center_x}" y="195" class="title">{CONFIG['name']}</text>
-        <text x="{center_x}" y="230" class="subtitle">{CONFIG['role']}</text>
-        
-        <text x="{center_x}" y="280" class="desc">{CONFIG['description_lines'][0]}</text>
-        <text x="{center_x}" y="305" class="desc">{CONFIG['description_lines'][1]}</text>
-        
-        <!-- Badges -->
-        <g transform="translate(0, 345)">
-            {badges_svg}
+        <circle cx="120" cy="80" r="2" fill="#fff" class="star" style="animation-delay: 0s;" />
+        <circle cx="850" cy="350" r="3" fill="#10b981" class="star" style="animation-delay: 1.2s;" />
+        <circle cx="450" cy="400" r="2" fill="#34d399" class="star" style="animation-delay: 2.5s;" />
+        <circle cx="700" cy="120" r="1.5" fill="#fff" class="star" style="animation-delay: 0.5s;" />
+        <circle cx="300" cy="200" r="2.5" fill="#fff" class="star" style="animation-delay: 1.8s;" />
+        <circle cx="920" cy="180" r="1.5" fill="#047857" class="star" style="animation-delay: 0.8s;" />
+
+        <!-- Header Glass Panel -->
+        <g class="glass-panel" transform="translate(0, 0)">
+            <rect x="50" y="30" width="900" height="390" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
+            
+            <image href="{avatar_b64}" x="{center_x - 45}" y="65" width="90" height="90" clip-path="url(#avatar-clip)" />
+            <circle cx="{center_x}" cy="110" r="46" fill="none" stroke="rgba(16, 185, 129, 0.5)" stroke-width="2" />
+            
+            <text x="{center_x}" y="195" class="title">{CONFIG['name']}</text>
+            <text x="{center_x}" y="230" class="subtitle">{CONFIG['role']}</text>
+            
+            <text x="{center_x}" y="280" class="desc">{CONFIG['description_lines'][0]}</text>
+            <text x="{center_x}" y="305" class="desc">{CONFIG['description_lines'][1]}</text>
+            
+            <g transform="translate(0, 345)">
+                {badges_svg}
+            </g>
+            
+            <g transform="translate(780, 50)">
+                <rect width="130" height="30" rx="15" fill="rgba(16, 185, 129, 0.05)" stroke="rgba(16, 185, 129, 0.3)" />
+                <circle cx="20" cy="15" r="4" fill="#10b981" class="star" />
+                <text x="35" y="19" class="badge-text" fill="#10b981">{CONFIG['status']}</text>
+            </g>
         </g>
         
-        <!-- Status Indicator (Top Right inside panel) -->
-        <g transform="translate(780, 50)">
-            <rect width="130" height="30" rx="15" fill="rgba(16, 185, 129, 0.05)" stroke="rgba(16, 185, 129, 0.3)" />
-            <circle cx="20" cy="15" r="4" fill="#10b981" class="star" />
-            <text x="35" y="19" class="badge-text" fill="#10b981">{CONFIG['status']}</text>
+        <!-- Inject the generated GitHub Snake SVG -->
+        <g transform="translate(50, 440)">
+            {snake_svg_content}
         </g>
+        
+        <!-- Outer Card Border -->
+        <rect width="100%" height="100%" fill="none" rx="24" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2" />
     </g>
-
     </svg>'''
     
+    # If dist folder exists, write there (for GitHub Actions)
+    if os.path.exists("dist"):
+        with open("dist/header.svg", "w", encoding="utf-8") as f:
+            f.write(svg_content)
+    
+    # Also write locally for manual execution
     with open("header.svg", "w", encoding="utf-8") as f:
         f.write(svg_content)
     
-    print("Successfully generated centered space-like header.svg")
+    print("Successfully generated unified space-like header.svg")
 
 if __name__ == "__main__":
     generate_svg()
