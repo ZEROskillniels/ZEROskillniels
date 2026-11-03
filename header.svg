@@ -40,7 +40,7 @@ text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#a8c9df;font-size:12px;fon
     <circle class="star" cx="356" cy="389" r="1"/><circle class="star" cx="44" cy="405" r="2" style="animation-delay:2.8s"/>
     <circle class="star" cx="925" cy="559" r="1.5"/><circle class="star" cx="315" cy="641" r="1"/>
   </g>
-  <path d="M42 46h510a30 30 0 0 1 30 30v327a30 30 0 0 1-30 30H42z" fill="#071426" fill-opacity=".65" stroke="#76c6ee" stroke-opacity=".16"/>
+  <rect x="42" y="46" width="540" height="387" rx="30" fill="#071426" fill-opacity=".65" stroke="#76c6ee" stroke-opacity=".16"/>
   <rect x="74" y="73" width="214" height="25" rx="12.5" fill="#103354" stroke="#4bbde9" stroke-opacity=".5"/>
   <circle cx="89" cy="85.5" r="4" fill="#59d8f3" filter="url(#glow)"/>
   <text x="101" y="90" fill="#a8e9f7" font-size="10" font-weight="700" letter-spacing="1">WORKING FOR TENBYTE ATM</text>
