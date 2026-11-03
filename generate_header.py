@@ -1,195 +1,163 @@
-import os
-import urllib.request
-import base64
+"""Build a self-contained, portfolio-inspired GitHub profile header."""
 
+import base64
+from html import escape
+from pathlib import Path
+from string import Template
+from urllib.request import Request, urlopen
+
+
+ROOT = Path(__file__).resolve().parent
 CONFIG = {
     "name": "Niels Duske",
-    "role": "UI/UX Designer &amp; Frontend Dev",
-    "description_lines": [
+    "role": "UI/UX Designer & Frontend Dev",
+    "description": (
         "Creating thoughtful digital products through interaction design,",
-        "user research, and frontend development."
-    ],
-    "avatar_url": "https://github.com/ZEROskillniels.png",
-    
-    "badges": ["FIGMA", "REACT", "NODE.JS", "ASTRO", "PYTHON", "ADOBE"],
+        "user research, and frontend development.",
+    ),
+    "badges": ("FIGMA", "REACT", "NODE.JS", "ASTRO", "PYTHON", "ADOBE"),
     "status": "WORKING FOR TENBYTE ATM",
-    
-    "width": 1000,
-    "height": 720  # Increased height to fit the snake!
 }
+SNAKE_URL = "https://raw.githubusercontent.com/ZEROskillniels/ZEROskillniels/output/github-snake.svg"
 
-def get_base64_image(url):
-    try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req) as response:
-            image_data = response.read()
-            b64_data = base64.b64encode(image_data).decode('utf-8')
-            return f"data:image/png;base64,{b64_data}"
-    except Exception as e:
-        print(f"Failed to fetch image: {e}")
-        return ""
+
+def snake_svg():
+    generated = ROOT / "dist" / "github-snake.svg"
+    if generated.exists():
+        source = generated.read_text(encoding="utf-8")
+    else:
+        request = Request(SNAKE_URL, headers={"User-Agent": "github-profile-header"})
+        with urlopen(request, timeout=20) as response:
+            source = response.read().decode("utf-8")
+    # Match the new palette even when the locally available snake is still green.
+    for old, new in {
+        "#16a34a": "#22d3ee",
+        "#161b22": "#0b1730",
+        "#064e3b": "#102e53",
+        "#047857": "#155a95",
+        "#10b981": "#238bd0",
+        "#34d399": "#67d9f4",
+    }.items():
+        source = source.replace(old, new)
+    return source
+
+
+def badges_svg():
+    output, x = [], 74
+    for badge in CONFIG["badges"]:
+        width = len(badge) * 8 + 28
+        output.append(
+            f'<g transform="translate({x} 0)"><rect width="{width}" height="28" rx="14" class="badge"/>'
+            f'<text x="{width / 2}" y="18" class="badge-label">{escape(badge)}</text></g>'
+        )
+        x += width + 9
+    return "".join(output)
+
+
+SVG = Template("""<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="720" viewBox="0 0 1000 720" role="img" aria-labelledby="title desc">
+<title id="title">Niels Duske — UI/UX Designer und Frontend Developer</title>
+<desc id="desc">Blauer Weltraum-Header mit Rakete, Profilbild und animierter GitHub-Commit-Schlange.</desc>
+<defs>
+  <linearGradient id="space" x2="1" y2="1"><stop stop-color="#010610"/><stop offset=".55" stop-color="#07182c"/><stop offset="1" stop-color="#0b2450"/></linearGradient>
+  <radialGradient id="aura"><stop stop-color="#1686d2" stop-opacity=".48"/><stop offset="1" stop-color="#1686d2" stop-opacity="0"/></radialGradient>
+  <linearGradient id="type"><stop stop-color="#a4efff"/><stop offset=".45" stop-color="#38c7ef"/><stop offset="1" stop-color="#398cf4"/></linearGradient>
+  <linearGradient id="hull"><stop stop-color="#93b5d2"/><stop offset=".16" stop-color="#344a66"/><stop offset=".54" stop-color="#14283f"/><stop offset=".86" stop-color="#3c5976"/><stop offset="1" stop-color="#9ac4dc"/></linearGradient>
+  <linearGradient id="fin" x2="1" y2="1"><stop stop-color="#669bc4"/><stop offset=".42" stop-color="#1e426a"/><stop offset="1" stop-color="#0c2549"/></linearGradient>
+  <linearGradient id="plume" x2="0" y2="1"><stop stop-color="#e1fcff"/><stop offset=".15" stop-color="#50d8ff"/><stop offset=".55" stop-color="#167cd8" stop-opacity=".7"/><stop offset="1" stop-color="#1260a5" stop-opacity="0"/></linearGradient>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#80b5e8" stroke-opacity=".055"/></pattern>
+  <filter id="blur"><feGaussianBlur stdDeviation="28"/></filter>
+  <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <clipPath id="frame"><rect width="1000" height="720" rx="24"/></clipPath>
+  <clipPath id="avatar"><circle cx="124" cy="191" r="47"/></clipPath>
+</defs>
+<style>
+text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#a8c9df;font-size:12px;font-weight:700;letter-spacing:3px}
+.name{fill:#fff;font-size:50px;font-weight:800;letter-spacing:-1.8px}.role{fill:url(#type);font-size:18px;font-weight:700;letter-spacing:1.4px}
+.description{fill:#b3c5d9;font-size:16px}.badge{fill:#112744;fill-opacity:.8;stroke:#62b7e7;stroke-opacity:.33}
+.badge-label{fill:#d0e9f5;font-size:11px;font-weight:700;letter-spacing:1px;text-anchor:middle}
+.section-label{fill:#8ccde8;font-size:11px;font-weight:700;letter-spacing:2.5px}
+.star{animation:twinkle 4s ease-in-out infinite}.rocket{animation:drift 7s ease-in-out infinite;transform-origin:760px 210px}
+.plume{animation:flame 2s ease-in-out infinite;transform-origin:760px 370px}
+@keyframes twinkle{50%{opacity:.25}}@keyframes drift{50%{transform:translateY(-6px) rotate(1deg)}}@keyframes flame{50%{transform:scaleY(.83);opacity:.72}}
+@media(prefers-reduced-motion:reduce){.star,.rocket,.plume{animation:none}}
+</style>
+<g clip-path="url(#frame)">
+  <rect width="1000" height="720" fill="url(#space)"/><rect width="1000" height="720" fill="url(#grid)"/>
+  <ellipse cx="760" cy="195" rx="310" ry="260" fill="url(#aura)"/>
+  <ellipse cx="97" cy="680" rx="250" ry="180" fill="#13529e" opacity=".25" filter="url(#blur)"/>
+  <path d="M-80 390C240 330 540 460 1100 103" fill="none" stroke="#44bff5" stroke-opacity=".2" stroke-width="1.5" stroke-dasharray="4 12"/>
+  <path d="M590-60C640 78 875 53 1070 340" fill="none" stroke="#6bd7f3" stroke-opacity=".13" stroke-width="1.5"/>
+  <circle cx="760" cy="210" r="180" fill="none" stroke="#74c4ee" stroke-opacity=".12"/>
+  <circle cx="760" cy="210" r="215" fill="none" stroke="#74c4ee" stroke-opacity=".08"/>
+  <g fill="#bcefff">
+    <circle class="star" cx="58" cy="71" r="1.5"/><circle class="star" cx="229" cy="95" r="1" style="animation-delay:1s"/>
+    <circle class="star" cx="565" cy="58" r="2" style="animation-delay:2s"/><circle class="star" cx="913" cy="65" r="1.5"/>
+    <circle class="star" cx="611" cy="352" r="1.5" style="animation-delay:1.5s"/><circle class="star" cx="945" cy="355" r="2"/>
+    <circle class="star" cx="356" cy="389" r="1"/><circle class="star" cx="44" cy="405" r="2" style="animation-delay:2.8s"/>
+    <circle class="star" cx="925" cy="559" r="1.5"/><circle class="star" cx="315" cy="641" r="1"/>
+  </g>
+  <path d="M42 46h510a30 30 0 0 1 30 30v327a30 30 0 0 1-30 30H42z" fill="#071426" fill-opacity=".65" stroke="#76c6ee" stroke-opacity=".16"/>
+  <rect x="74" y="73" width="214" height="25" rx="12.5" fill="#103354" stroke="#4bbde9" stroke-opacity=".5"/>
+  <circle cx="89" cy="85.5" r="4" fill="#59d8f3" filter="url(#glow)"/>
+  <text x="101" y="90" fill="#a8e9f7" font-size="10" font-weight="700" letter-spacing="1">$status</text>
+  <circle cx="124" cy="191" r="52" fill="#08213d" stroke="#52c8f1" stroke-width="2"/>
+  <image href="$avatar" x="77" y="144" width="94" height="94" clip-path="url(#avatar)" preserveAspectRatio="xMidYMid slice"/>
+  <text x="193" y="181" class="eyebrow">HELLO, I AM</text>
+  <text x="192" y="230" class="name">$name</text>
+  <text x="74" y="278" class="role">$role</text>
+  <path d="M74 296h457" stroke="#5dbde6" stroke-opacity=".25"/>
+  <text x="74" y="327" class="description">$description1</text>
+  <text x="74" y="352" class="description">$description2</text>
+  <g transform="translate(0 381)">$badges</g>
+  <!-- A cylindrical metallic rocket with cyan circuitry, like the portfolio's 3D scene. -->
+  <g class="rocket">
+    <ellipse cx="765" cy="265" rx="107" ry="192" fill="#0b57a6" opacity=".27" filter="url(#blur)"/>
+    <g class="plume">
+      <path d="M738 350Q733 411 747 466Q763 490 776 466Q793 411 786 350Z" fill="url(#plume)" opacity=".55" filter="url(#glow)"/>
+      <path d="M750 350Q745 402 760 441Q779 402 774 350Z" fill="url(#plume)"/>
+      <path d="M760 359Q754 393 761 419Q769 393 766 359Z" fill="#d5faff" opacity=".9"/>
+    </g>
+    <path d="M719 308Q690 333 673 403Q707 392 746 363L744 298Z" fill="url(#fin)" stroke="#7fc5eb" stroke-opacity=".65" stroke-width="2"/>
+    <path d="M800 308Q828 333 846 403Q809 392 774 363L777 298Z" fill="url(#fin)" stroke="#7fc5eb" stroke-opacity=".65" stroke-width="2"/>
+    <path d="M724 351Q760 365 796 351L787 378Q760 387 733 378Z" fill="#0b203b" stroke="#8bdbf5" stroke-opacity=".62" stroke-width="2"/>
+    <path d="M724 179Q733 123 760 80Q787 123 796 179L797 324Q796 350 782 360H738Q723 350 723 324Z" fill="url(#hull)" stroke="#a3c9e6" stroke-width="2.5"/>
+    <path d="M735 169Q740 126 760 88Q780 126 786 169Z" fill="#18395c" stroke="#64bcec" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M760 92Q746 123 744 167" fill="none" stroke="#c8ecff" stroke-opacity=".65" stroke-width="2"/>
+    <path d="M727 198H793M726 311H794" stroke="#61c9f3" stroke-opacity=".65" stroke-width="3" filter="url(#glow)"/>
+    <path d="M740 206V299M781 206V299" stroke="#69cbee" stroke-opacity=".4" stroke-width="2" stroke-dasharray="9 8"/>
+    <circle cx="760" cy="240" r="32" fill="#081b33" stroke="#a6e8f8" stroke-width="5"/>
+    <circle cx="760" cy="240" r="25" fill="#0b5895" stroke="#61d9fa" stroke-width="2"/>
+    <circle cx="760" cy="240" r="19" fill="#10334f"/>
+    <path d="M747 235Q757 223 773 233" fill="none" stroke="#b8f5ff" stroke-opacity=".8" stroke-width="3" stroke-linecap="round"/>
+    <path d="M750 332H770" stroke="#7adbf6" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>
+  </g>
+  <path d="M48 450H952" stroke="#73bee9" stroke-opacity=".25"/>
+  <text x="64" y="478" class="section-label">GITHUB CONTRIBUTIONS</text>
+  <text x="937" y="478" text-anchor="end" fill="#648fb1" font-size="10" letter-spacing="1.2">ANIMATED SNAKE</text>
+  <rect x="48" y="491" width="904" height="199" rx="22" fill="#06152b" fill-opacity=".82" stroke="#76c6ee" stroke-opacity=".23"/>
+  <g transform="translate(60 496)">$snake</g>
+  <rect x="1" y="1" width="998" height="718" rx="23" fill="none" stroke="#89c8ee" stroke-opacity=".25" stroke-width="2"/>
+</g>
+</svg>""")
+
 
 def generate_svg():
-    width = CONFIG["width"]
-    height = CONFIG["height"]
-    center_x = width / 2
-    
-    avatar_b64 = get_base64_image(CONFIG["avatar_url"])
-    
-    badge_widths = [len(b) * 8 + 30 for b in CONFIG["badges"]]
-    total_badges_width = sum(badge_widths) + (len(badge_widths) - 1) * 12
-    badges_start_x = center_x - (total_badges_width / 2)
-    
-    badges_svg = ""
-    current_x = badges_start_x
-    for i, badge in enumerate(CONFIG["badges"]):
-        b_width = badge_widths[i]
-        badges_svg += f'''
-        <g transform="translate({current_x}, 0)">
-            <rect x="0" y="0" width="{b_width}" height="26" rx="13" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.1)" />
-            <text x="{b_width/2}" y="17" text-anchor="middle" class="badge-text">{badge}</text>
-        </g>'''
-        current_x += b_width + 12
+    avatar = base64.b64encode((ROOT / "profile.png").read_bytes()).decode("ascii")
+    svg = SVG.substitute(
+        avatar=f"data:image/png;base64,{avatar}",
+        snake=snake_svg(),
+        status=escape(CONFIG["status"]),
+        name=escape(CONFIG["name"]),
+        role=escape(CONFIG["role"]),
+        description1=escape(CONFIG["description"][0]),
+        description2=escape(CONFIG["description"][1]),
+        badges=badges_svg(),
+    )
+    (ROOT / "header.svg").write_text(svg, encoding="utf-8")
+    if (ROOT / "dist").exists():
+        (ROOT / "dist" / "header.svg").write_text(svg, encoding="utf-8")
+    print("Generated blue rocket header with animated contribution snake.")
 
-    # Load the snake SVG if it exists (run by GitHub Actions)
-    snake_svg_content = ""
-    if os.path.exists("dist/github-snake.svg"):
-        with open("dist/github-snake.svg", "r", encoding="utf-8") as f:
-            snake_svg_content = f.read()
-
-    svg_content = f'''<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-        <filter id="blur-heavy" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="80" />
-        </filter>
-        <filter id="glass-blur" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="12" result="blur" />
-            <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="glow" />
-            <feMerge>
-                <feMergeNode in="glow"/>
-                <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-        </filter>
-
-        <linearGradient id="glass-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="rgba(255, 255, 255, 0.08)"/>
-            <stop offset="100%" stop-color="rgba(255, 255, 255, 0.01)"/>
-        </linearGradient>
-        <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#4ade80" />
-            <stop offset="50%" stop-color="#22c55e" />
-            <stop offset="100%" stop-color="#16a34a" />
-        </linearGradient>
-        
-        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
-            <circle cx="40" cy="40" r="1" fill="rgba(255,255,255,0.1)"/>
-        </pattern>
-        
-        <clipPath id="avatar-clip">
-            <circle cx="{center_x}" cy="110" r="45" />
-        </clipPath>
-        
-        <clipPath id="card-clip">
-            <rect width="{width}" height="{height}" rx="24" />
-        </clipPath>
-    </defs>
-
-    <style>
-        .title {{ font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 38px; font-weight: 800; fill: #ffffff; letter-spacing: -0.5px; text-transform: uppercase; text-anchor: middle; }}
-        .subtitle {{ font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 16px; font-weight: 600; fill: url(#text-grad); text-transform: uppercase; letter-spacing: 3px; text-anchor: middle; }}
-        .desc {{ font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 15px; fill: #94a3b8; font-weight: 400; text-anchor: middle; }}
-        .badge-text {{ font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 11px; fill: #cbd5e1; font-weight: 600; letter-spacing: 1.5px; }}
-        
-        @keyframes float1 {{ 0%, 100% {{ transform: translate(0px, 0px) scale(1); }} 50% {{ transform: translate(40px, -50px) scale(1.1); }} }}
-        @keyframes float2 {{ 0%, 100% {{ transform: translate(0px, 0px) scale(1); }} 50% {{ transform: translate(-50px, 30px) scale(1.15); }} }}
-        @keyframes float3 {{ 0%, 100% {{ transform: translate(0px, 0px) scale(1); }} 50% {{ transform: translate(30px, 50px) scale(0.9); }} }}
-        
-        .nebula-1 {{ animation: float1 18s ease-in-out infinite; transform-origin: center; }}
-        .nebula-2 {{ animation: float2 22s ease-in-out infinite; transform-origin: center; }}
-        .nebula-3 {{ animation: float3 25s ease-in-out infinite; transform-origin: center; }}
-        
-        @keyframes pulse-star {{ 0%, 100% {{ opacity: 0.2; transform: scale(0.8); }} 50% {{ opacity: 1; transform: scale(1.3); }} }}
-        .star {{ animation: pulse-star 4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }}
-        
-        @keyframes dash {{ to {{ stroke-dashoffset: -400; }} }}
-        .data-path {{ stroke-dasharray: 4 12; animation: dash 20s linear infinite; }}
-        
-        @keyframes glass-float {{ 0%, 100% {{ transform: translateY(0px); }} 50% {{ transform: translateY(-5px); }} }}
-        .glass-panel {{ animation: glass-float 8s ease-in-out infinite; }}
-    </style>
-
-    <!-- Unified Dashboard Card -->
-    <g clip-path="url(#card-clip)">
-        <rect width="100%" height="100%" fill="#050505" rx="24" />
-        <rect width="100%" height="100%" fill="url(#grid)" opacity="0.5" rx="24" />
-
-        <!-- Nebulas extending down -->
-        <circle cx="850" cy="150" r="280" fill="rgba(4, 120, 87, 0.45)" filter="url(#blur-heavy)" class="nebula-1" />
-        <circle cx="150" cy="450" r="300" fill="rgba(16, 185, 129, 0.35)" filter="url(#blur-heavy)" class="nebula-2" />
-        <circle cx="650" cy="600" r="250" fill="rgba(52, 211, 153, 0.35)" filter="url(#blur-heavy)" class="nebula-3" />
-
-        <path d="M -50 150 Q 200 100 350 250 T 700 350 T 1100 250" fill="none" stroke="rgba(52, 211, 153, 0.2)" stroke-width="1.5" class="data-path" />
-        <path d="M -50 450 Q 300 550 550 300 T 900 200 T 1100 50" fill="none" stroke="rgba(16, 185, 129, 0.2)" stroke-width="1" class="data-path" style="animation-duration: 25s;" />
-
-        <circle cx="120" cy="80" r="2" fill="#fff" class="star" style="animation-delay: 0s;" />
-        <circle cx="850" cy="350" r="3" fill="#10b981" class="star" style="animation-delay: 1.2s;" />
-        <circle cx="450" cy="400" r="2" fill="#34d399" class="star" style="animation-delay: 2.5s;" />
-        <circle cx="700" cy="120" r="1.5" fill="#fff" class="star" style="animation-delay: 0.5s;" />
-        <circle cx="300" cy="200" r="2.5" fill="#fff" class="star" style="animation-delay: 1.8s;" />
-        <circle cx="920" cy="180" r="1.5" fill="#047857" class="star" style="animation-delay: 0.8s;" />
-
-        <!-- Header Glass Panel -->
-        <g transform="translate(0, 0)">
-            <g class="glass-panel">
-                <rect x="50" y="30" width="900" height="390" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
-                
-                <image href="{avatar_b64}" x="{center_x - 45}" y="65" width="90" height="90" clip-path="url(#avatar-clip)" />
-                <circle cx="{center_x}" cy="110" r="46" fill="none" stroke="rgba(16, 185, 129, 0.5)" stroke-width="2" />
-                
-                <text x="{center_x}" y="195" class="title">{CONFIG['name']}</text>
-                <text x="{center_x}" y="230" class="subtitle">{CONFIG['role']}</text>
-                
-                <text x="{center_x}" y="280" class="desc">{CONFIG['description_lines'][0]}</text>
-                <text x="{center_x}" y="305" class="desc">{CONFIG['description_lines'][1]}</text>
-                
-                <g transform="translate(0, 345)">
-                    {badges_svg}
-                </g>
-                
-                <g transform="translate(680, 50)">
-                    <rect width="230" height="30" rx="15" fill="rgba(16, 185, 129, 0.05)" stroke="rgba(16, 185, 129, 0.3)" />
-                    <circle cx="20" cy="15" r="4" fill="#10b981" class="star" />
-                    <text x="35" y="19" class="badge-text" fill="#10b981">{CONFIG['status']}</text>
-                </g>
-            </g>
-        </g>
-        
-        <!-- Snake Glass Panel -->
-        <g transform="translate(50, 440)">
-            <g class="glass-panel" style="animation-delay: -4s;">
-                <rect x="0" y="0" width="900" height="230" rx="30" fill="url(#glass-grad)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" />
-                <g transform="translate(10, 19)">
-                    {snake_svg_content}
-                </g>
-            </g>
-        </g>
-        
-        <!-- Outer Card Border -->
-        <rect width="100%" height="100%" fill="none" rx="24" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2" />
-    </g>
-    </svg>'''
-    
-    # If dist folder exists, write there (for GitHub Actions)
-    if os.path.exists("dist"):
-        with open("dist/header.svg", "w", encoding="utf-8") as f:
-            f.write(svg_content)
-    
-    # Also write locally for manual execution
-    with open("header.svg", "w", encoding="utf-8") as f:
-        f.write(svg_content)
-    
-    print("Successfully generated unified space-like header.svg")
 
 if __name__ == "__main__":
     generate_svg()

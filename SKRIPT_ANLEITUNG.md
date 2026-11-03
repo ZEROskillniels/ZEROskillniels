@@ -1,42 +1,17 @@
-# Animated GitHub Profile Header Generator
+# GitHub-Profil-Header
 
-A Python script to generate a cool, animated, terminal-style SVG header for your GitHub Profile README.
-It automatically converts a profile picture into ASCII art and adds typing animations for your details.
+`generate_header.py` erzeugt den blauen SVG-Header mit Rakete, Profiltext, dem vorhandenen Bild aus `profile.png` und der animierten Commit-Schlange.
 
-## Prerequisites
+## Lokal erzeugen
 
-- Python 3.x
-- `pip`
+```bash
+python generate_header.py
+```
 
-## Setup & Usage
+Das Skript schreibt `header.svg`. Wenn `dist/github-snake.svg` vorhanden ist, nutzt es diese Datei. Andernfalls lädt es die zuletzt veröffentlichte Schlange aus dem `output`-Branch. Für diesen lokalen Fall ist eine Internetverbindung nötig.
 
-1. **Install dependencies**:
-   Run the following command to install the required `Pillow` library for image processing:
-   ```bash
-   pip install -r requirements.txt
-   ```
+Die Texte und Badges stehen im `CONFIG`-Block von `generate_header.py`. Ein neues Profilbild kann später durch Austausch von `profile.png` eingebaut werden. Weitere Python-Pakete sind für den Generator nicht nötig.
 
-2. **Add your image**:
-   Place an image of yourself in this folder and name it `profile.jpg`. (If no image is provided, a placeholder ASCII art will be used).
+## Automatische Aktualisierung
 
-3. **Configure your details**:
-   Open `generate_header.py` in your text editor. At the top of the file, you'll find the `CONFIG` dictionary. 
-   Customize the text, links, and colors to your liking. The default color is Hacker Green (`#23d18b`).
-
-4. **Generate the Header**:
-   Run the script:
-   ```bash
-   python generate_header.py
-   ```
-   This will generate a `header.svg` file in the same directory.
-
-5. **Add to your GitHub Profile**:
-   Upload the `header.svg` to your GitHub profile repository and include it in your `README.md` like this:
-   ```html
-   <img src="header.svg" width="100%" alt="Profile Header" />
-   ```
-
-## Customization
-
-- `theme_color`: Change the accent color (e.g., `#00ffff` for Cyan, `#ff00ff` for Magenta).
-- `details`: Add or remove rows to display your tech stack, currently playing Spotify song, or anything else you'd like!
+Der Workflow `.github/workflows/snake.yml` generiert die blaue Schlange und den Header bei Pushes auf `main`, täglich und auf manuellen Aufruf. Beide SVGs landen im `output`-Branch, aus dem `README.md` den Header lädt.

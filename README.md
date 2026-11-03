@@ -1,5 +1,5 @@
 
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/ZEROskillniels/ZEROskillniels/output/header.svg?v=18" width="100%" alt="Mein Space-Dashboard Header" />
+  <img src="https://raw.githubusercontent.com/ZEROskillniels/ZEROskillniels/output/header.svg?v=19" width="100%" alt="Niels Duske – blauer Weltraum-Header mit Rakete und Commit-Schlange" />
 </p>
